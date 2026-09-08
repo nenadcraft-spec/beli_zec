@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#020308">
+    <title>WHR STUDIOS — Centralni Portal v1.0</title>
+    <style>
+        :root {
+            --bg-deep: #020308;
+            --bg-main: #060811;
+            --bg-panel: rgba(10, 14, 25, 0.95);
+            --border-color: rgba(255, 255, 255, 0.12);
+            --text-main: #f5f8ff;
+            --text-soft: #aeb8cc;
+            --cyan: #00f2ff;
+            --amber: #ffb000;
+            --fps-green: #24e96f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: var(--bg-deep);
+            color: var(--text-main);
+            font-family: "Segoe UI", Roboto, sans-serif;
+        }
+
+        /* Glavna mreža portala */
+        .whr-terminal {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            isolation: isolate;
+        }
+
+        .whr-terminal::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 24px 24px;
+            opacity: 0.4;
+        }
+
+        /* Gornja kontrolna traka */
+        .terminal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .terminal-title {
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--text-main);
+        }
+
+        .system-status {
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            color: var(--fps-green);
+            padding: 4px 8px;
+            border: 1px solid var(--fps-green);
+            border-radius: 4px;
+            background: rgba(36, 233, 111, 0.05);
+        }
+
+        /* Glavni kontrolni most */
+        .bridge-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-top: 20px;
+            min-height: 0;
+        }
+
+        @media (min-width: 768px) {
+            .bridge-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        .module-card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .module-meta {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--amber);
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+
+        .module-name {
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+        }
+
+        .module-desc {
+            font-size: 13px;
+            color: var(--text-soft);
+            line-height: 1.6;
+        }
+
+        .action-button {
+            width: 100%;
+            min-height: 44px;
+            background: linear-gradient(180deg, rgba(0, 242, 255, 0.15), rgba(0, 242, 255, 0.03));
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            border-radius: 10px;
+            color: var(--cyan);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 120ms ease, background 120ms ease;
+        }
+
+        .action-button:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="whr-terminal">
+        <header class="terminal-header">
+            <div class="terminal-title">◇ WHITE HAT RABBIT STUDIOS</div>
+            <div id="runtimeStatus" class="system-status">MAGISTRALA: OPERATIVNA</div>
+        </header>
+
+        <main class="bridge-grid">
+            <!-- Modul 01: Engine Core -->
+            <section class="module-card">
+                <div>
+                    <p class="module-meta">LABORATORY CORE</p>
+                    <h2 class="module-name">Color Engine v2.0</h2>
+                    <p class="module-desc">Proceduralna simulacija fizike i mešanja RGB roditelja. Fixed timestep emulacija u 1/120s sa seeded Mulberry32 RNG stabilizacijom čestica.</p>
+                </div>
+                <button class="action-button" onclick="bridgeCommand('LAUNCH_ENGINE')">POKRENI SIMULACIJU</button>
+            </section>
+
+            <!-- Modul 02: Master Pipeline -->
+            <section class="module-card">
+                <div>
+                    <p class="module-meta">AUTOMATION & QA</p>
+                    <h2 class="module-name">beli_zec Control Bridge</h2>
+                    <p class="module-desc">Centralni upravljački sloj i verifikacioni Gate. Prati determinističko generisanje frejmova, sakuplja ffprobe logove i osigurava Zero Deviation standard.</p>
+                </div>
+                <button class="action-button" onclick="bridgeCommand('OPEN_MAGISTRALA')">OTVORI REGISTAR LOGOVA</button>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        "use strict";
+        console.log("WHR Central Portal initialized. Zero Deviation standard active.");
+
+        function bridgeCommand(type) {
+            console.log(`[BRIDGE_COMMAND] Iniciran protokol: ${type}`);
+            // Ovde se kači kasniji sistemski most ili ruter za sklapanje sa arhivom
+        }
+    </script>
+</body>
+</html>
