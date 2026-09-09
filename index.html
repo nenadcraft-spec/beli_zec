@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#020308">
-  <title>WHR STUDIOS — Centralni Portal v3</title>
-
+  <title>WHR STUDIOS — Centralni Portal v3.1</title>
   <style>
     :root {
-      --bg: #020308;
-      --panel: rgba(10, 14, 25, 0.94);
+      --bg-deep: #020308;
+      --bg-main: #060811;
+      --bg-panel: rgba(10, 14, 25, 0.94);
       --border: rgba(255, 255, 255, 0.12);
       --text: #f5f8ff;
       --soft: #aeb8cc;
@@ -17,17 +17,12 @@
       --amber: #ffb000;
       --green: #24e96f;
       --red: #ff4d62;
+      --purple: #b88cff;
+      --header-h: 71px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      min-height: 100%;
-      background: var(--bg);
-    }
-
+    * { box-sizing: border-box; }
+    html { min-height: 100%; background: var(--bg-deep); }
     body {
       min-width: 280px;
       min-height: 100%;
@@ -36,15 +31,10 @@
       overflow-y: auto;
       color: var(--text);
       background:
-        radial-gradient(
-          circle at 15% 0%,
-          rgba(0, 242, 255, 0.08),
-          transparent 28rem
-        ),
-        var(--bg);
+        radial-gradient(circle at 15% 0%, rgba(0, 242, 255, 0.08), transparent 28rem),
+        var(--bg-deep);
       font-family: "Segoe UI", Roboto, system-ui, sans-serif;
     }
-
     body::before {
       content: "";
       position: fixed;
@@ -52,249 +42,70 @@
       z-index: -1;
       pointer-events: none;
       background-image:
-        linear-gradient(
-          rgba(255, 255, 255, 0.016) 1px,
-          transparent 1px
-        ),
-        linear-gradient(
-          90deg,
-          rgba(255, 255, 255, 0.016) 1px,
-          transparent 1px
-        );
+        linear-gradient(rgba(255,255,255,.016) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.016) 1px, transparent 1px);
       background-size: 24px 24px;
     }
+    button, a { font: inherit; }
+    button:focus-visible, a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
 
-    button,
-    a,
-    input {
-      font: inherit;
-    }
-
-    button:focus-visible,
-    a:focus-visible,
-    input:focus-visible {
-      outline: 2px solid var(--cyan);
-      outline-offset: 3px;
-    }
-
-    .shell {
-      width: min(1180px, 100%);
-      min-height: 100vh;
-      margin: auto;
-      padding: 20px;
-    }
-
+    .shell { width: min(1180px, 100%); min-height: 100vh; margin: auto; padding: 20px; }
     .topbar {
       position: sticky;
       top: 0;
       z-index: 20;
-      min-height: 71px;
+      min-height: var(--header-h);
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 18px;
       padding: 13px 0;
       border-bottom: 1px solid var(--border);
-      background: rgba(2, 3, 8, 0.88);
+      background: rgba(2, 3, 8, .88);
       backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
     }
-
-    .brand {
-      min-width: 0;
-    }
-
-    .brand strong {
-      display: block;
-      font-size: 14px;
-      letter-spacing: 2px;
-    }
-
-    .brand small {
-      color: var(--soft);
-      font: 700 9px/1.5 ui-monospace, monospace;
-      letter-spacing: 1.4px;
-    }
-
+    .brand { min-width: 0; }
+    .brand strong { display: block; font-size: 14px; letter-spacing: 2px; }
+    .brand small { color: var(--soft); font: 700 9px/1.5 ui-monospace, monospace; letter-spacing: 1.4px; }
     .status-button {
-      --status-color: var(--green);
-
       flex: 0 0 auto;
       display: inline-flex;
       align-items: center;
       gap: 8px;
       min-height: 38px;
       padding: 7px 11px;
-      border: 1px solid var(--status-color);
+      border: 1px solid var(--status-color, var(--green));
       border-radius: 8px;
-      color: var(--status-color);
-      background: rgba(36, 233, 111, 0.07);
+      color: var(--status-color, var(--green));
+      background: color-mix(in srgb, var(--status-color, var(--green)) 8%, transparent);
       font-size: 10px;
       font-weight: 900;
       letter-spacing: 1px;
       cursor: pointer;
     }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; box-shadow: 0 0 12px currentColor; }
 
-    .status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: currentColor;
-      box-shadow: 0 0 12px currentColor;
-    }
+    .hero { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(320px, .9fr); align-items: stretch; gap: 32px; padding: 38px 0 25px; }
+    .eyebrow { margin: 0 0 8px; color: var(--cyan); font: 800 10px/1 ui-monospace, monospace; letter-spacing: 2px; }
+    h1 { max-width: 700px; margin: 0; font-size: clamp(28px, 5vw, 56px); line-height: .98; letter-spacing: -2px; }
+    .hero-copy { max-width: 650px; margin: 15px 0 0; color: var(--soft); font-size: 14px; line-height: 1.7; }
+    .version { color: var(--amber); font: 900 10px/1 ui-monospace, monospace; letter-spacing: 1.5px; }
+    .office-door { position: relative; min-height: 245px; overflow: hidden; border: 1px solid rgba(0,242,255,.24); border-radius: 16px; background: #050810; box-shadow: 0 14px 38px rgba(0,0,0,.42); cursor: pointer; padding: 0; color: var(--text); text-align: left; }
+    .office-door img { width: 100%; height: 100%; min-height: 245px; display: block; object-fit: cover; object-position: center; opacity: .72; transition: opacity 160ms ease, transform 240ms ease; }
+    .office-door:hover img { opacity: .9; transform: scale(1.015); }
+    .office-door.knocking { animation: knock 180ms ease 2; }
+    .door-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; padding: 18px; background: linear-gradient(180deg, rgba(2,3,8,.2), rgba(2,3,8,.16) 45%, rgba(2,3,8,.94)); }
+    .door-top { display: flex; justify-content: space-between; gap: 12px; }
+    .door-label { font: 900 10px/1.3 ui-monospace, monospace; letter-spacing: 1.4px; color: var(--cyan); }
+    .door-bottom strong { display: block; margin-bottom: 7px; font-size: 19px; }
+    .door-bottom span { color: var(--soft); font: 800 9px/1.4 ui-monospace, monospace; letter-spacing: 1px; }
+    @keyframes knock { 50% { transform: translateX(3px); } }
 
-    .hero {
-      display: grid;
-      grid-template-columns:
-        minmax(0, 1.1fr)
-        minmax(320px, 0.9fr);
-      align-items: stretch;
-      gap: 32px;
-      padding: 38px 0 25px;
-    }
-
-    .eyebrow {
-      margin: 0 0 8px;
-      color: var(--cyan);
-      font: 800 10px/1 ui-monospace, monospace;
-      letter-spacing: 2px;
-    }
-
-    h1 {
-      max-width: 700px;
-      margin: 0;
-      font-size: clamp(28px, 5vw, 56px);
-      line-height: 0.98;
-      letter-spacing: -2px;
-    }
-
-    .hero-copy {
-      max-width: 650px;
-      margin: 15px 0 0;
-      color: var(--soft);
-      font-size: 14px;
-      line-height: 1.7;
-    }
-
-    .version {
-      color: var(--amber);
-      font: 900 10px/1 ui-monospace, monospace;
-      letter-spacing: 1.5px;
-    }
-
-    /* VRATA KANCELARIJE */
-
-    .office-door {
-      position: relative;
-      min-height: 245px;
-      overflow: hidden;
-      padding: 0;
-      border: 1px solid rgba(0, 242, 255, 0.24);
-      border-radius: 16px;
-      color: var(--text);
-      background: #050810;
-      box-shadow: 0 14px 38px rgba(0, 0, 0, 0.42);
-      text-align: left;
-      cursor: pointer;
-    }
-
-    .office-door img {
-      width: 100%;
-      height: 100%;
-      min-height: 245px;
-      display: block;
-      object-fit: cover;
-      object-position: center;
-      opacity: 0.72;
-      transition:
-        opacity 160ms ease,
-        transform 240ms ease;
-    }
-
-    .office-door:hover img {
-      opacity: 0.92;
-      transform: scale(1.015);
-    }
-
-    .office-door.knocking {
-      animation: knock 180ms ease 2;
-    }
-
-    .door-overlay {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 18px;
-      background:
-        linear-gradient(
-          180deg,
-          rgba(2, 3, 8, 0.18),
-          rgba(2, 3, 8, 0.12) 45%,
-          rgba(2, 3, 8, 0.95)
-        );
-    }
-
-    .door-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .door-label {
-      color: var(--cyan);
-      font: 900 10px/1.3 ui-monospace, monospace;
-      letter-spacing: 1.4px;
-    }
-
-    .door-bottom strong {
-      display: block;
-      margin-bottom: 7px;
-      font-size: 19px;
-    }
-
-    .door-bottom span {
-      color: var(--soft);
-      font: 800 9px/1.4 ui-monospace, monospace;
-      letter-spacing: 1px;
-    }
-
-    @keyframes knock {
-      50% {
-        transform: translateX(3px);
-      }
-    }
-
-    /* MODULI */
-
-    .line-label {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin: 18px 0 10px;
-      color: var(--soft);
-      font: 800 10px/1 ui-monospace, monospace;
-      letter-spacing: 1.6px;
-    }
-
-    .line-label::after {
-      content: "";
-      height: 1px;
-      flex: 1;
-      background: var(--border);
-    }
-
-    .line-label.ai {
-      color: var(--cyan);
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
-    }
-
+    .line-label { display: flex; align-items: center; gap: 12px; margin: 18px 0 10px; color: var(--soft); font: 800 10px/1 ui-monospace, monospace; letter-spacing: 1.6px; }
+    .line-label::after { content: ""; height: 1px; flex: 1; background: var(--border); }
+    .line-label.ai { color: var(--cyan); }
+    .line-label.oi { color: var(--amber); }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
     .card {
       position: relative;
       min-height: 260px;
@@ -306,538 +117,148 @@
       padding: 24px;
       border: 1px solid var(--border);
       border-radius: 16px;
-      background: var(--panel);
-      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.32);
+      background: var(--bg-panel);
+      box-shadow: 0 14px 36px rgba(0,0,0,.32);
     }
-
-    .card::after {
-      content: attr(data-index);
-      position: absolute;
-      right: 16px;
-      top: 10px;
-      color: rgba(255, 255, 255, 0.035);
-      font: 900 64px/1 ui-monospace, monospace;
-    }
-
-    .meta {
-      margin: 0 0 8px;
-      color: var(--accent, var(--amber));
-      font: 800 10px/1 ui-monospace, monospace;
-      letter-spacing: 1.5px;
-    }
-
-    h2 {
-      position: relative;
-      z-index: 1;
-      margin: 0 0 12px;
-      font-size: 21px;
-    }
-
-    .desc {
-      position: relative;
-      z-index: 1;
-      max-width: 52ch;
-      margin: 0;
-      color: var(--soft);
-      font-size: 13px;
-      line-height: 1.65;
-    }
-
+    .card::after { content: attr(data-index); position: absolute; right: 16px; top: 10px; color: rgba(255,255,255,.035); font: 900 64px/1 ui-monospace, monospace; }
+    .meta { margin: 0 0 8px; color: var(--accent, var(--amber)); font: 800 10px/1 ui-monospace, monospace; letter-spacing: 1.5px; }
+    h2 { position: relative; z-index: 1; margin: 0 0 12px; font-size: 21px; }
+    .desc { position: relative; z-index: 1; max-width: 52ch; margin: 0; color: var(--soft); font-size: 13px; line-height: 1.65; }
     .action {
       position: relative;
       z-index: 2;
       width: 100%;
       min-height: 44px;
-      border: 1px solid var(--accent, var(--cyan));
+      border: 1px solid color-mix(in srgb, var(--accent, var(--cyan)) 38%, transparent);
       border-radius: 10px;
       color: var(--accent, var(--cyan));
-      background: rgba(0, 242, 255, 0.06);
+      background: linear-gradient(180deg, color-mix(in srgb, var(--accent, var(--cyan)) 14%, transparent), transparent);
       font-size: 11px;
       font-weight: 900;
       letter-spacing: 1.1px;
       cursor: pointer;
-      transition:
-        transform 120ms ease,
-        background 120ms ease;
+      transition: transform 120ms ease, border-color 120ms ease;
     }
+    .action:hover { border-color: var(--accent, var(--cyan)); }
+    .action:active { transform: scale(.985); }
+    .ai-card { --accent: var(--cyan); border-top-color: rgba(0,242,255,.45); }
+    .oi-card { --accent: var(--amber); border-top-color: rgba(255,176,0,.45); }
 
-    .action:hover {
-      background: rgba(0, 242, 255, 0.11);
-    }
+    .footer { display: flex; justify-content: space-between; gap: 18px; padding: 28px 0 8px; color: var(--soft); font: 700 9px/1.6 ui-monospace, monospace; letter-spacing: 1px; }
+    .footer a { color: var(--cyan); text-decoration: none; }
 
-    .action:active {
-      transform: scale(0.985);
-    }
-
-    .ai-card {
-      --accent: var(--cyan);
-      border-top-color: rgba(0, 242, 255, 0.45);
-    }
-
-    .oi-card {
-      --accent: var(--amber);
-      border-top-color: rgba(255, 176, 0, 0.45);
-    }
-
-    .footer {
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 28px 0 8px;
-      color: var(--soft);
-      font: 700 9px/1.6 ui-monospace, monospace;
-      letter-spacing: 1px;
-    }
-
-    .footer a {
-      color: var(--cyan);
-      text-decoration: none;
-    }
-
-    /* BOČNI PANELI */
-
-    .backdrop {
-      position: fixed;
-      inset: 0;
-      z-index: 40;
-      opacity: 0;
-      pointer-events: none;
-      background: rgba(0, 0, 0, 0.64);
-      transition: opacity 180ms ease;
-    }
-
+    .backdrop { position: fixed; inset: 0; z-index: 40; background: rgba(0,0,0,.64); opacity: 0; pointer-events: none; transition: opacity 180ms ease; }
     .drawer {
       position: fixed;
       inset: 0 0 0 auto;
       z-index: 50;
       width: min(570px, 100%);
-      height: 100vh;
       height: 100dvh;
       overflow-y: auto;
       transform: translateX(102%);
+      transition: transform 210ms ease;
       border-left: 1px solid var(--border);
       background: #070a12;
-      box-shadow: -20px 0 60px rgba(0, 0, 0, 0.55);
-      transition: transform 210ms ease;
+      box-shadow: -20px 0 60px rgba(0,0,0,.55);
     }
+    body.drawer-open { overflow: hidden; }
+    body.drawer-open .backdrop { opacity: 1; pointer-events: auto; }
+    body.drawer-open .drawer { transform: translateX(0); }
+    .drawer-head { position: sticky; top: 0; z-index: 2; display: flex; justify-content: space-between; gap: 12px; padding: 19px 22px; border-bottom: 1px solid var(--border); background: rgba(7,10,18,.92); backdrop-filter: blur(14px); }
+    .route { color: var(--cyan); font: 800 10px/1.4 ui-monospace, monospace; letter-spacing: 1.3px; }
+    .close { width: 36px; height: 36px; border: 1px solid var(--border); border-radius: 8px; color: var(--text); background: transparent; cursor: pointer; }
+    .panel { display: none; padding: 26px 22px 44px; }
+    .panel.active { display: block; }
+    .panel h2 { font-size: 30px; }
+    .panel-lead { margin: 0 0 24px; color: var(--soft); line-height: 1.7; }
+    .terminal-box { margin: 14px 0; padding: 16px; border: 1px solid var(--border); border-radius: 10px; background: #03050a; color: #c8d4e8; font: 12px/1.7 ui-monospace, monospace; white-space: pre-wrap; }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0; }
+    .tag { padding: 5px 8px; border: 1px solid var(--border); border-radius: 999px; color: var(--soft); font: 800 9px/1 ui-monospace, monospace; letter-spacing: 1px; }
+    .notice { padding: 15px; border-left: 3px solid var(--amber); background: rgba(255,176,0,.07); color: #f4d99a; font-size: 12px; line-height: 1.65; }
+    .status-options { display: grid; gap: 9px; margin-top: 18px; }
+    .status-choice { display: flex; justify-content: space-between; align-items: center; gap: 14px; min-height: 46px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 9px; color: var(--text); background: transparent; cursor: pointer; text-align: left; }
+    .status-choice[aria-pressed="true"] { border-color: var(--choice); box-shadow: inset 3px 0 var(--choice); }
+    .status-choice small { color: var(--soft); }
 
-    body.drawer-open {
-      overflow: hidden;
-    }
+    dialog { width: min(440px, calc(100% - 28px)); padding: 0; border: 1px solid rgba(0,242,255,.32); border-radius: 14px; color: var(--text); background: #080b14; box-shadow: 0 24px 80px rgba(0,0,0,.72); }
+    dialog::backdrop { background: rgba(0,0,0,.78); backdrop-filter: blur(5px); }
+    .gate { padding: 24px; }
+    .gate h2 { margin: 8px 0 10px; font-size: 25px; }
+    .gate p { color: var(--soft); font-size: 13px; line-height: 1.6; }
+    .gate label { display: block; margin: 16px 0 7px; color: var(--cyan); font: 800 10px/1 ui-monospace, monospace; letter-spacing: 1px; }
+    .gate input { width: 100%; min-height: 46px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 9px; background: #03050a; color: var(--text); font: 14px ui-monospace, monospace; }
+    .gate-actions { display: flex; gap: 9px; margin-top: 20px; }
+    .gate-actions button { flex: 1; min-height: 42px; border: 1px solid var(--border); border-radius: 9px; color: var(--text); background: transparent; cursor: pointer; }
+    .gate-actions .primary { border-color: var(--cyan); color: var(--cyan); background: rgba(0,242,255,.07); }
+    .gate-error { min-height: 19px; margin: 10px 0 0 !important; color: var(--red) !important; }
 
-    body.drawer-open .backdrop {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    body.drawer-open .drawer {
-      transform: translateX(0);
-    }
-
-    .drawer-head {
-      position: sticky;
-      top: 0;
-      z-index: 2;
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 19px 22px;
-      border-bottom: 1px solid var(--border);
-      background: rgba(7, 10, 18, 0.92);
-      backdrop-filter: blur(14px);
-    }
-
-    .route {
-      color: var(--cyan);
-      font: 800 10px/1.4 ui-monospace, monospace;
-      letter-spacing: 1.3px;
-    }
-
-    .close {
-      width: 36px;
-      height: 36px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text);
-      background: transparent;
-      cursor: pointer;
-    }
-
-    .panel {
-      display: none;
-      padding: 26px 22px 44px;
-    }
-
-    .panel.active {
-      display: block;
-    }
-
-    .panel h2 {
-      font-size: 30px;
-    }
-
-    .panel-lead {
-      margin: 0 0 24px;
-      color: var(--soft);
-      line-height: 1.7;
-    }
-
-    .terminal-box {
-      margin: 14px 0;
-      padding: 16px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      color: #c8d4e8;
-      background: #03050a;
-      font: 12px/1.7 ui-monospace, monospace;
-      white-space: pre-wrap;
-    }
-
-    .tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 18px 0;
-    }
-
-    .tag {
-      padding: 5px 8px;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      color: var(--soft);
-      font: 800 9px/1 ui-monospace, monospace;
-      letter-spacing: 1px;
-    }
-
-    .notice {
-      padding: 15px;
-      border-left: 3px solid var(--amber);
-      color: #f4d99a;
-      background: rgba(255, 176, 0, 0.07);
-      font-size: 12px;
-      line-height: 1.65;
-    }
-
-    .status-options {
-      display: grid;
-      gap: 9px;
-      margin-top: 18px;
-    }
-
-    .status-choice {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 14px;
-      min-height: 46px;
-      padding: 10px 12px;
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      color: var(--text);
-      background: transparent;
-      text-align: left;
-      cursor: pointer;
-    }
-
-    .status-choice[aria-pressed="true"] {
-      border-color: var(--choice);
-      box-shadow: inset 3px 0 var(--choice);
-    }
-
-    .status-choice small {
-      color: var(--soft);
-    }
-
-    /* KUCANJE I LOZINKA */
-
-    dialog {
-      width: min(440px, calc(100% - 28px));
-      padding: 0;
-      border: 1px solid rgba(0, 242, 255, 0.32);
-      border-radius: 14px;
-      color: var(--text);
-      background: #080b14;
-      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.72);
-    }
-
-    dialog::backdrop {
-      background: rgba(0, 0, 0, 0.78);
-      backdrop-filter: blur(5px);
-    }
-
-    .gate {
-      padding: 24px;
-    }
-
-    .gate h2 {
-      margin: 8px 0 10px;
-      font-size: 25px;
-    }
-
-    .gate p {
-      color: var(--soft);
-      font-size: 13px;
-      line-height: 1.6;
-    }
-
-    .gate label {
-      display: block;
-      margin: 16px 0 7px;
-      color: var(--cyan);
-      font: 800 10px/1 ui-monospace, monospace;
-      letter-spacing: 1px;
-    }
-
-    .gate input {
-      width: 100%;
-      min-height: 46px;
-      padding: 10px 12px;
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      color: var(--text);
-      background: #03050a;
-      font: 14px ui-monospace, monospace;
-    }
-
-    .gate-actions {
-      display: flex;
-      gap: 9px;
-      margin-top: 20px;
-    }
-
-    .gate-actions button {
-      flex: 1;
-      min-height: 42px;
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      color: var(--text);
-      background: transparent;
-      cursor: pointer;
-    }
-
-    .gate-actions .primary {
-      border-color: var(--cyan);
-      color: var(--cyan);
-      background: rgba(0, 242, 255, 0.07);
-    }
-
-    .gate-error {
-      min-height: 19px;
-      margin: 10px 0 0 !important;
-      color: var(--red) !important;
-    }
-
-    /* IZOLOVANA KANCELARIJA */
-
-    .office {
-      position: fixed;
-      inset: 0;
-      z-index: 80;
-      display: none;
-      overflow-y: auto;
-      background: var(--bg);
-    }
-
-    body.office-open {
-      overflow: hidden;
-    }
-
-    body.office-open .office {
-      display: block;
-    }
-
-    .office-shell {
-      width: min(1240px, 100%);
-      min-height: 100%;
-      margin: auto;
-      padding: 22px;
-    }
-
-    .office-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 18px;
-      padding-bottom: 18px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .office-title small {
-      display: block;
-      margin-bottom: 7px;
-      color: var(--red);
-      font: 900 9px/1 ui-monospace, monospace;
-      letter-spacing: 1.5px;
-    }
-
-    .office-title h1 {
-      font-size: clamp(25px, 4vw, 42px);
-      letter-spacing: -1px;
-    }
-
-    .lock-exit {
-      min-height: 42px;
-      padding: 9px 13px;
-      border: 1px solid var(--red);
-      border-radius: 9px;
-      color: var(--red);
-      background: rgba(255, 77, 98, 0.06);
-      font: 900 9px/1 ui-monospace, monospace;
-      letter-spacing: 1px;
-      cursor: pointer;
-    }
-
-    .office-intro {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      padding: 24px 0 16px;
-      color: var(--soft);
-      font: 800 10px/1.6 ui-monospace, monospace;
-      letter-spacing: 1px;
-    }
-
-    .archive-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .archive-window {
-      position: relative;
-      min-height: 138px;
-      padding: 17px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      color: var(--text);
-      background: rgba(10, 14, 25, 0.9);
-      text-align: left;
-      cursor: pointer;
-    }
-
-    .archive-window:hover,
-    .archive-window.selected {
-      border-color: var(--cyan);
-      background: rgba(0, 242, 255, 0.045);
-    }
-
-    .archive-number {
-      color: rgba(255, 255, 255, 0.18);
-      font: 900 24px/1 ui-monospace, monospace;
-    }
-
-    .archive-window strong {
-      display: block;
-      margin: 18px 0 8px;
-      font-size: 13px;
-      overflow-wrap: anywhere;
-    }
-
-    .archive-window small {
-      color: var(--soft);
-      font: 800 8px/1.4 ui-monospace, monospace;
-      letter-spacing: 0.8px;
-    }
-
-    .office-status {
-      min-height: 42px;
-      margin-top: 14px;
-      padding: 12px 14px;
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      color: var(--soft);
-      font: 10px/1.6 ui-monospace, monospace;
-    }
+    .office { position: fixed; inset: 0; z-index: 80; display: none; overflow-y: auto; background: #020308; }
+    body.office-open { overflow: hidden; }
+    body.office-open .office { display: block; }
+    .office-shell { width: min(1240px, 100%); min-height: 100%; margin: auto; padding: 22px; }
+    .office-head { display: flex; justify-content: space-between; align-items: center; gap: 18px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+    .office-title small { display: block; margin-bottom: 7px; color: var(--red); font: 900 9px/1 ui-monospace, monospace; letter-spacing: 1.5px; }
+    .office-title h1 { font-size: clamp(25px, 4vw, 42px); letter-spacing: -1px; }
+    .lock-exit { min-height: 42px; padding: 9px 13px; border: 1px solid var(--red); border-radius: 9px; color: var(--red); background: rgba(255,77,98,.06); font: 900 9px/1 ui-monospace, monospace; letter-spacing: 1px; cursor: pointer; }
+    .office-intro { display: flex; justify-content: space-between; gap: 20px; padding: 24px 0 16px; color: var(--soft); font: 800 10px/1.6 ui-monospace, monospace; letter-spacing: 1px; }
+    .control-room { display: grid; grid-template-columns: minmax(175px, .55fr) minmax(420px, 1.7fr) minmax(175px, .55fr); grid-template-rows: repeat(2, minmax(175px, 1fr)); grid-template-areas: "rabbit video gemini" "chatgpt video qwen"; gap: 12px; }
+    .office-node { position: relative; min-height: 175px; padding: 17px; overflow: hidden; border: 1px solid var(--border); border-radius: 12px; color: var(--text); background: rgba(10,14,25,.9); text-align: left; cursor: pointer; }
+    .office-node:hover, .office-node.selected { border-color: var(--node-color, var(--cyan)); background: color-mix(in srgb, var(--node-color, var(--cyan)) 6%, var(--panel)); }
+    .office-node::after { content: ""; position: absolute; width: 7px; height: 7px; right: 14px; top: 14px; border-radius: 50%; background: var(--node-color, var(--cyan)); box-shadow: 0 0 10px var(--node-color, var(--cyan)); }
+    .node-rabbit { grid-area: rabbit; --node-color: var(--red); }
+    .node-chatgpt { grid-area: chatgpt; --node-color: #24e96f; }
+    .node-gemini { grid-area: gemini; --node-color: var(--purple); }
+    .node-qwen { grid-area: qwen; --node-color: var(--cyan); }
+    .node-number { color: rgba(255,255,255,.18); font: 900 24px/1 ui-monospace, monospace; }
+    .office-node strong { display: block; margin: 30px 0 8px; font-size: 14px; overflow-wrap: anywhere; }
+    .office-node small { color: var(--soft); font: 800 8px/1.5 ui-monospace, monospace; letter-spacing: .8px; }
+    .video-station { grid-area: video; position: relative; min-height: 362px; overflow: hidden; display: flex; flex-direction: column; border: 1px solid rgba(0,242,255,.34); border-radius: 14px; background: #010205; box-shadow: inset 0 0 40px rgba(0,242,255,.035); }
+    .video-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 14px; border-bottom: 1px solid var(--border); color: var(--cyan); font: 900 9px/1 ui-monospace, monospace; letter-spacing: 1.2px; }
+    .video-screen { position: relative; flex: 1; min-height: 290px; display: grid; place-items: center; background: radial-gradient(circle, rgba(0,242,255,.07), transparent 58%), #000; }
+    .video-screen video { width: 100%; height: 100%; max-height: 440px; display: none; object-fit: contain; background: #000; }
+    .video-screen.has-video video { display: block; }
+    .video-screen.has-video .video-empty { display: none; }
+    .video-empty { padding: 24px; text-align: center; color: var(--soft); }
+    .video-empty strong { display: block; margin-bottom: 10px; color: var(--text); font-size: 18px; }
+    .video-empty span { display: block; font: 9px/1.7 ui-monospace, monospace; letter-spacing: 1px; }
+    .video-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; border-top: 1px solid var(--border); }
+    .video-file { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+    .video-pick { padding: 8px 11px; border: 1px solid var(--cyan); border-radius: 7px; color: var(--cyan); background: rgba(0,242,255,.07); font: 900 8px/1 ui-monospace, monospace; letter-spacing: 1px; cursor: pointer; }
+    .video-name { min-width: 0; overflow: hidden; color: var(--soft); font: 8px/1.4 ui-monospace, monospace; text-overflow: ellipsis; white-space: nowrap; }
+    .cube-label { margin: 22px 0 11px; color: var(--soft); font: 900 9px/1 ui-monospace, monospace; letter-spacing: 1.3px; }
+    .cube-dock { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+    .archive-cube { --cube-color: var(--cyan); position: relative; width: 112px; aspect-ratio: 1; padding: 12px; overflow: hidden; border: 1px solid var(--border); border-radius: 12px; color: var(--text); background: linear-gradient(145deg, rgba(255,255,255,.035), transparent 55%), rgba(10,14,25,.94); text-align: left; cursor: pointer; }
+    .archive-cube:hover, .archive-cube.selected { transform: translateY(-2px); border-color: var(--cube-color); box-shadow: 0 10px 26px rgba(0,0,0,.35), inset 0 0 20px color-mix(in srgb, var(--cube-color) 7%, transparent); }
+    .cube-number { color: rgba(255,255,255,.22); font: 900 13px/1 ui-monospace, monospace; }
+    .archive-cube strong { position: absolute; inset: auto 10px 13px; font-size: 10px; overflow-wrap: anywhere; }
+    .cube-dot { position: absolute; right: 11px; top: 11px; width: 6px; height: 6px; border-radius: 50%; background: var(--cube-color); box-shadow: 0 0 9px var(--cube-color); }
+    .office-status { min-height: 42px; margin-top: 14px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 9px; color: var(--soft); font: 10px/1.6 ui-monospace, monospace; }
 
     @media (max-width: 680px) {
-      .shell {
-        min-height: 100vh;
-        min-height: 100dvh;
-        padding: 0 14px 18px;
-      }
-
-      .topbar {
-        min-height: 64px;
-      }
-
-      .brand strong {
-        font-size: 11px;
-        letter-spacing: 1.3px;
-      }
-
-      .brand small {
-        display: none;
-      }
-
-      .status-button {
-        max-width: 148px;
-        font-size: 8px;
-        letter-spacing: 0.5px;
-      }
-
-      .hero {
-        grid-template-columns: 1fr;
-        padding: 28px 0 18px;
-      }
-
-      .hero-copy {
-        font-size: 13px;
-      }
-
-      .office-door,
-      .office-door img {
-        min-height: 210px;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      .card {
-        min-height: 230px;
-        padding: 20px;
-      }
-
-      .footer {
-        flex-direction: column;
-      }
-
-      .drawer {
-        border-left: 0;
-      }
-
-      .office-shell {
-        padding: 14px;
-      }
-
-      .office-head,
-      .office-intro {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .archive-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+      .shell { min-height: 100dvh; padding: 0 14px 18px; }
+      .topbar { min-height: 64px; }
+      .brand strong { font-size: 11px; letter-spacing: 1.3px; }
+      .brand small { display: none; }
+      .status-button { max-width: 148px; font-size: 8px; letter-spacing: .5px; }
+      .hero { display: grid; grid-template-columns: 1fr; padding: 28px 0 18px; }
+      .hero-copy { font-size: 13px; }
+      .office-door, .office-door img { min-height: 210px; }
+      .grid { grid-template-columns: 1fr; }
+      .card { min-height: 230px; padding: 20px; }
+      .footer { flex-direction: column; }
+      .drawer { border-left: 0; }
+      .office-shell { padding: 14px; }
+      .office-head, .office-intro { align-items: flex-start; flex-direction: column; }
+      .control-room { grid-template-columns: 1fr; grid-template-rows: auto; grid-template-areas: "rabbit" "chatgpt" "video" "gemini" "qwen"; }
+      .office-node { min-height: 125px; }
+      .office-node strong { margin-top: 20px; }
+      .video-station { min-height: 300px; }
+      .cube-dock { justify-content: flex-start; }
     }
-
-    @media (max-width: 390px) {
-      .archive-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        scroll-behavior: auto !important;
-        transition: none !important;
-      }
-    }
+    @media (max-width: 390px) { .archive-cube { width: calc(50% - 6px); } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; } }
   </style>
 </head>
-
 <body>
   <div class="shell">
     <header class="topbar">
@@ -845,13 +266,7 @@
         <strong>◇ WHITE HAT RABBIT STUDIOS</strong>
         <small>CENTRALNI PORTAL // DUALNA ARHITEKTURA</small>
       </div>
-
-      <button
-        id="statusButton"
-        class="status-button"
-        type="button"
-        aria-label="Promeni status magistrale"
-      >
+      <button id="statusButton" class="status-button" type="button" aria-label="Promeni status magistrale">
         <span class="status-dot" aria-hidden="true"></span>
         <span id="statusText">MAGISTRALA: OPERATIVNA</span>
       </button>
@@ -861,1135 +276,404 @@
       <section class="hero" aria-labelledby="portal-title">
         <div>
           <p class="eyebrow">WHR // CONTROL SURFACE</p>
-
-          <h1 id="portal-title">
-            Jedan portal.<br>
-            Dve jasne linije.
-          </h1>
-
-          <p class="hero-copy">
-            Lokalna komandna površina za pregled modula, stanja
-            i budućih integracija. Sve kontrole u ovoj verziji
-            rade unutar pregledača.
-          </p>
+          <h1 id="portal-title">Jedan portal.<br>Dve jasne linije.</h1>
+          <p class="hero-copy">Lokalna komandna površina za pregled modula, stanja i budućih integracija. Sve kontrole u ovoj verziji rade unutar pregledača.</p>
         </div>
-
-        <button
-          id="officeDoor"
-          class="office-door"
-          type="button"
-          aria-label="Pokucaj na vrata Kancelarije Belog Zeca"
-        >
-          <img
-            src="assets/kancelarija-vrata.png"
-            alt="Vrata Kancelarije Belog Zeca sa Džerijem i kokicama"
-          >
-
+        <button id="officeDoor" class="office-door" type="button" aria-label="Pokucaj na vrata Kancelarije Belog Zeca">
+          <img src="assets/kancelarija-vrata.png" alt="Vrata Kancelarije Belog Zeca sa Džerijem i kokicama">
           <span class="door-overlay">
-            <span class="door-top">
-              <span class="door-label">
-                101 // PRIVATNA KANCELARIJA
-              </span>
-
-              <span class="version">
-                BUILD 3.0
-              </span>
-            </span>
-
-            <span class="door-bottom">
-              <strong>Kancelarija Belog Zeca</strong>
-              <span>POKUCAJ ZA PRISTUP →</span>
-            </span>
+            <span class="door-top"><span class="door-label">101 // PRIVATNA KANCELARIJA</span><span class="version">BUILD 3.1</span></span>
+            <span class="door-bottom"><strong>Kancelarija Belog Zeca</strong><span>POKUCAJ ZA PRISTUP →</span></span>
           </span>
         </button>
       </section>
 
-      <div class="line-label">
-        JEZGRO I KONTROLA
-      </div>
-
+      <div class="line-label">JEZGRO I KONTROLA</div>
       <section class="grid" aria-label="Jezgro i kontrola">
         <article class="card" data-index="01">
           <div>
             <p class="meta">LABORATORY CORE</p>
-
             <h2>Color Engine v2.0</h2>
-
-            <p class="desc">
-              Proceduralna laboratorija za fiziku i RGB mešanje.
-              Ovaj portal prikazuje lokalni kontrolni panel;
-              sam simulacioni engine nije ugrađen u portal.
-            </p>
+            <p class="desc">Proceduralna laboratorija za fiziku i RGB mešanje. Ovaj portal prikazuje lokalni kontrolni panel; sam simulacioni engine nije ugrađen u portal.</p>
           </div>
-
-          <button
-            class="action route-button"
-            type="button"
-            data-route="color-engine"
-          >
-            OTVORI ENGINE PANEL
-          </button>
+          <button class="action route-button" type="button" data-route="color-engine">OTVORI ENGINE PANEL</button>
         </article>
-
         <article class="card" data-index="02">
           <div>
             <p class="meta">AUTOMATION &amp; QA</p>
-
             <h2>beli_zec Control Bridge</h2>
-
-            <p class="desc">
-              Lokalni registar komandi i statusa. Integracija sa
-              logovima, ffprobe proverama i eksternim procesima
-              ostaje buduća APP funkcija.
-            </p>
+            <p class="desc">Lokalni registar komandi i statusa. Integracija sa logovima, ffprobe proverama i eksternim procesima ostaje buduća APP funkcija.</p>
           </div>
-
-          <button
-            class="action route-button"
-            type="button"
-            data-route="control-bridge"
-          >
-            OTVORI MAGISTRALU
-          </button>
+          <button class="action route-button" type="button" data-route="control-bridge">OTVORI MAGISTRALU</button>
         </article>
       </section>
 
-      <div class="line-label ai">
-        AI LINIJA // SISTEMSKA OBRADA
-      </div>
-
+      <div class="line-label ai">AI LINIJA // SISTEMSKA OBRADA</div>
       <section class="grid" aria-label="AI i OI linija">
         <article class="card ai-card" data-index="03">
           <div>
             <p class="meta">AI LINIJA // SISTEM</p>
-
             <h2>AI Mašinska sala</h2>
-
-            <p class="desc">
-              Predviđeno mesto za CHATGPT + GEMINI + QWEN tok:
-              biblioteka, poreklo, obrada, klasifikacija i
-              generisanje DOKAZ-a.
-            </p>
+            <p class="desc">Predviđeno mesto za CHATGPT + GEMINI + QWEN tok: biblioteka, poreklo, obrada, klasifikacija i generisanje DOKAZ-a.</p>
           </div>
-
-          <button
-            class="action route-button"
-            type="button"
-            data-route="ai-sala"
-          >
-            PRIKAŽI AI LINIJU
-          </button>
+          <button class="action route-button" type="button" data-route="ai-sala">PRIKAŽI AI LINIJU</button>
         </article>
-
         <article class="card oi-card" data-index="04">
           <div>
             <p class="meta">OI LINIJA // ČOVEK</p>
-
             <h2>OI Komandni most</h2>
-
-            <p class="desc">
-              BELI_ZEC + LAMIJA sloj za unos, pregled, nadzor i
-              konačnu LJUDSKU_POTVRDU. Odvojen od automatske
-              AI obrade.
-            </p>
+            <p class="desc">BELI_ZEC + LAMIJA sloj za unos, pregled, nadzor i konačnu LJUDSKU_POTVRDU. Odvojen od automatske AI obrade.</p>
           </div>
-
-          <button
-            class="action route-button"
-            type="button"
-            data-route="oi-most"
-          >
-            PRIKAŽI OI LINIJU
-          </button>
+          <button class="action route-button" type="button" data-route="oi-most">PRIKAŽI OI LINIJU</button>
         </article>
       </section>
     </main>
 
     <footer class="footer">
-      <span>
-        STATIC_UI = ACTIVE // BACKEND = NOT_CONNECTED
-      </span>
-
-      <a href="#app-bridge">
-        APP BRIDGE // FUTURE INTEGRATION POINT →
-      </a>
+      <span>STATIC_UI = ACTIVE // BACKEND = NOT_CONNECTED</span>
+      <a href="#app-bridge">APP BRIDGE // FUTURE INTEGRATION POINT →</a>
     </footer>
   </div>
 
-  <div
-    id="backdrop"
-    class="backdrop"
-    aria-hidden="true"
-  ></div>
-
-  <aside
-    id="drawer"
-    class="drawer"
-    aria-hidden="true"
-    aria-label="Detalji modula"
-  >
+  <div id="backdrop" class="backdrop" aria-hidden="true"></div>
+  <aside id="drawer" class="drawer" aria-hidden="true" aria-label="Detalji modula">
     <header class="drawer-head">
-      <div>
-        <div class="route" id="routeLabel">
-          ROUTE //
-        </div>
-      </div>
-
-      <button
-        id="closeDrawer"
-        class="close"
-        type="button"
-        aria-label="Zatvori panel"
-      >
-        ✕
-      </button>
+      <div><div class="route" id="routeLabel">ROUTE //</div></div>
+      <button id="closeDrawer" class="close" type="button" aria-label="Zatvori panel">✕</button>
     </header>
 
     <section class="panel" data-panel="color-engine">
       <h2>Color Engine v2.0</h2>
-
-      <p class="panel-lead">
-        Kontrolna tačka simulacionog modula. U statičkoj v3
-        verziji ovo je pregled spremnosti, ne pokretanje
-        eksternog engine-a.
-      </p>
-
-      <div class="tag-row">
-        <span class="tag">FIXED TIMESTEP</span>
-        <span class="tag">SEEDED RNG</span>
-        <span class="tag">RGB PHYSICS</span>
-      </div>
-
+      <p class="panel-lead">Kontrolna tačka simulacionog modula. U statičkoj v2 verziji ovo je pregled spremnosti, ne pokretanje eksternog engine-a.</p>
+      <div class="tag-row"><span class="tag">FIXED TIMESTEP</span><span class="tag">SEEDED RNG</span><span class="tag">RGB PHYSICS</span></div>
       <div class="terminal-box">ENGINE_ROUTE = READY
 EXECUTION_MODE = LOCAL_UI_ONLY
 SIMULATION_RUNTIME = NOT_EMBEDDED</div>
-
-      <div class="notice">
-        Za stvarno pokretanje simulacije kasnije povezati
-        APP bridge sa eksplicitnom komandom i odgovorom.
-      </div>
+      <div class="notice">Za stvarno pokretanje simulacije kasnije povezati APP bridge sa eksplicitnom komandom i odgovorom o uspehu.</div>
     </section>
 
     <section class="panel" data-panel="control-bridge">
       <h2>beli_zec Control Bridge</h2>
-
-      <p class="panel-lead">
-        Magistrala čuva lokalni status interfejsa. Izaberi
-        operativno stanje; izbor se pamti samo u pregledaču.
-      </p>
-
-      <div
-        id="statusOptions"
-        class="status-options"
-      ></div>
-
-      <div
-        class="terminal-box"
-        id="bridgeLog"
-      >[LOCAL] Magistrala spremna za UI komande.</div>
-
-      <div class="notice">
-        Nema povezanog registra logova, ffprobe procesa ni
-        servera. Status je prezentaciono stanje UI-ja.
-      </div>
+      <p class="panel-lead">Magistrala čuva lokalni status interfejsa. Izaberi operativno stanje; izbor se pamti samo u ovom pregledaču.</p>
+      <div id="statusOptions" class="status-options"></div>
+      <div class="terminal-box" id="bridgeLog">[LOCAL] Magistrala spremna za UI komande.</div>
+      <div class="notice">Nema povezanog registra logova, ffprobe procesa ni servera. Status je prezentaciono stanje UI-ja.</div>
     </section>
 
     <section class="panel" data-panel="ai-sala">
       <h2>AI Mašinska sala</h2>
-
-      <p class="panel-lead">
-        Sistemska linija je odvojena od ljudske potvrde.
-      </p>
-
+      <p class="panel-lead">Sistemska linija je namenski odvojena od ljudske potvrde.</p>
       <div class="terminal-box">ULAZ → BIBLIOTEKA / POREKLO
 OBRADA → CHATGPT + GEMINI + QWEN
 IZLAZ → KLASIFIKACIJA + NACRT DOKAZA
 KONAČNA POTVRDA → NIJE U AI LINIJI</div>
-
-      <div class="notice">
-        Imena servisa označavaju planiranu arhitekturu.
-        Ovaj fajl ne šalje mrežne zahteve.
-      </div>
+      <div class="notice">Imena servisa označavaju planiranu arhitekturu. Ovaj fajl ne šalje mrežne zahteve i ne tvrdi da su AI servisi povezani.</div>
     </section>
 
     <section class="panel" data-panel="oi-most">
       <h2>OI Komandni most</h2>
-
-      <p class="panel-lead">
-        Ljudski sloj zadržava nadzor, tumačenje i završnu
-        potvrdu rezultata.
-      </p>
-
+      <p class="panel-lead">Ljudski sloj zadržava nadzor, tumačenje i završnu potvrdu rezultata.</p>
       <div class="terminal-box">ULAZ → BELI_ZEC + LAMIJA
 KONTROLA → PREGLED / NADZOR
 ODLUKA → LJUDSKA_POTVRDA
 GRANICA → AI NE POTVRĐUJE UMESTO ČOVEKA</div>
-
-      <div class="notice">
-        OI panel je lokalna arhitektonska mapa. Ne izvršava
-        niti potpisuje stvarne odluke.
-      </div>
+      <div class="notice">OI panel je lokalna arhitektonska mapa. Ne izvršava niti potpisuje stvarne odluke.</div>
     </section>
 
     <section class="panel" data-panel="app-bridge">
       <h2>APP Bridge</h2>
-
-      <p class="panel-lead">
-        Rezervisana tačka za buduće povezivanje portala sa
-        desktop ili serverskom aplikacijom.
-      </p>
-
+      <p class="panel-lead">Jasno rezervisana tačka za buduće povezivanje portala sa desktop ili serverskom aplikacijom.</p>
       <div class="terminal-box">INTEGRATION_STATUS = NOT_CONNECTED
 TRANSPORT = UNDEFINED
 API_CONTRACT = TODO
 FALLBACK = STATIC_LOCAL_UI</div>
-
-      <div class="notice">
-        Ovde kasnije definisati dozvoljene komande, format
-        odgovora, autentikaciju, timeout i prikaz grešaka.
-      </div>
+      <div class="notice">Future integration point: ovde kasnije definisati dozvoljene komande, format odgovora, autentikaciju, timeout i prikaz grešaka.</div>
     </section>
   </aside>
 
   <dialog id="accessGate">
-    <form
-      id="accessForm"
-      class="gate"
-      method="dialog"
-    >
-      <p class="eyebrow">
-        KUCANJE // PRIVATNI ULAZ
-      </p>
-
-      <h2>Kancelarija Belog Zeca</h2>
-
-      <p id="gateHelp">
-        Unesi lozinku za ulaz.
-      </p>
-
-      <label for="officePassword">
-        LOZINKA
-      </label>
-
-      <input
-        id="officePassword"
-        type="password"
-        autocomplete="current-password"
-        required
-        minlength="4"
-      >
-
+    <form id="accessForm" class="gate" method="dialog">
+      <p class="eyebrow">KUCANJE // PRIVATNI ULAZ</p>
+      <h2 id="gateTitle">Kancelarija Belog Zeca</h2>
+      <p id="gateHelp">Unesi lozinku za ulaz.</p>
+      <label for="officePassword">LOZINKA</label>
+      <input id="officePassword" type="password" autocomplete="current-password" required minlength="4">
       <div id="confirmWrap" hidden>
-        <label for="officePasswordConfirm">
-          POTVRDI LOZINKU
-        </label>
-
-        <input
-          id="officePasswordConfirm"
-          type="password"
-          autocomplete="new-password"
-          minlength="4"
-        >
+        <label for="officePasswordConfirm">POTVRDI LOZINKU</label>
+        <input id="officePasswordConfirm" type="password" autocomplete="new-password" minlength="4">
       </div>
-
-      <p
-        id="gateError"
-        class="gate-error"
-        role="alert"
-      ></p>
-
+      <p id="gateError" class="gate-error" role="alert"></p>
       <div class="gate-actions">
-        <button
-          id="cancelGate"
-          type="button"
-        >
-          ODUSTANI
-        </button>
-
-        <button
-          class="primary"
-          type="submit"
-        >
-          OTKLJUČAJ
-        </button>
+        <button id="cancelGate" type="button">ODUSTANI</button>
+        <button class="primary" type="submit">OTKLJUČAJ</button>
       </div>
     </form>
   </dialog>
 
-  <section
-    id="office"
-    class="office"
-    aria-hidden="true"
-  >
+  <section id="office" class="office" aria-hidden="true">
     <div class="office-shell">
       <header class="office-head">
-        <div class="office-title">
-          <small>
-            IZOLOVANA ZONA // LOCAL UI
-          </small>
-
-          <h1>
-            Kancelarija Belog Zeca
-          </h1>
-        </div>
-
-        <button
-          id="lockOffice"
-          class="lock-exit"
-          type="button"
-        >
-          ZAKLJUČAJ I IZAĐI
-        </button>
+        <div class="office-title"><small>IZOLOVANA ZONA // LOCAL UI</small><h1>Kancelarija Belog Zeca</h1></div>
+        <button id="lockOffice" class="lock-exit" type="button">ZAKLJUČAJ I IZAĐI</button>
       </header>
-
-      <div class="office-intro">
-        <span>
-          PRIVATNA ARHIVA // 13 PROZORA
-        </span>
-
-        <span>
-          APP BRIDGES = ČEKAJU MONTAŽU
-        </span>
-      </div>
-
-      <div
-        id="archiveGrid"
-        class="archive-grid"
-        aria-label="Trinaest arhivskih prozora"
-      ></div>
-
-      <div
-        id="officeStatus"
-        class="office-status"
-        aria-live="polite"
-      >
-        Izaberi arhivski prozor. Svi prozori su trenutno prazni.
-      </div>
+      <div class="office-intro"><span>KOMANDNA SOBA // 4 KANCELARIJE + VIDEO</span><span>APP BRIDGES = ČEKAJU MONTAŽU</span></div>
+      <div id="controlRoom" class="control-room" aria-label="Glavne kancelarije i video ekran"></div>
+      <div class="cube-label">POMOĆNI MODULI // MALE KOCKE</div>
+      <div id="cubeDock" class="cube-dock" aria-label="Pomoćni arhivski moduli"></div>
+      <div id="officeStatus" class="office-status" aria-live="polite">Komandna soba je spremna. Izaberi kancelariju, kocku ili lokalni MP4.</div>
     </div>
   </section>
 
   <script>
     "use strict";
 
-    const routes = new Set([
-      "color-engine",
-      "control-bridge",
-      "ai-sala",
-      "oi-most",
-      "app-bridge"
-    ]);
-
+    const routes = new Set(["color-engine", "control-bridge", "ai-sala", "oi-most", "app-bridge"]);
     const officeRoute = "beli-zec-office";
-
-    const archiveNames = [
-      "_1Screenshots_",
-      "_2Screenshots_",
-      "_md_",
-      "_pdf_",
-      "_txt_",
-      "_zakljucano_",
-      "WHR simbolički folder",
-      "app_prevodilac_v05_FINAL",
-      "KEY_PRECICE_UPUSTVO",
-      "10_QWEN_kancelarija",
-      "12_GEMINI_kancelarija",
-      "13_CHATGPT_kancelarija",
-      "101_BELIZEC_kancelarija"
+    const mainOffices = [
+      { key: "rabbit", number: "01", name: "101_BELIZEC_kancelarija", role: "CENTRALA // ROUTER // PEČAT" },
+      { key: "chatgpt", number: "13", name: "13_CHATGPT_kancelarija", role: "ARHITEKTURA // KOD // PREGLED" },
+      { key: "gemini", number: "12", name: "12_GEMINI_kancelarija", role: "PDF // VIZUELNI SLOJ" },
+      { key: "qwen", number: "10", name: "10_QWEN_kancelarija", role: "MASTER KODER" }
     ];
-
+    const cubeModules = [
+      { number: "02", name: "_1Screenshots_", color: "#b88cff" },
+      { number: "04", name: "_pdf_", color: "#ff4d62" },
+      { number: "05", name: "_txt_", color: "#f5f8ff" },
+      { number: "08", name: "app_prevodilac", color: "#24e96f" },
+      { number: "09", name: "KEY_PRECICE", color: "#ffb000" }
+    ];
     const statusConfig = {
-      operational: {
-        label: "OPERATIVNA",
-        color: "#24e96f",
-        background: "rgba(36, 233, 111, 0.07)",
-        note: "UI je spreman za lokalne komande."
-      },
-
-      standby: {
-        label: "STANDBY",
-        color: "#ffb000",
-        background: "rgba(255, 176, 0, 0.07)",
-        note: "UI je u režimu čekanja."
-      },
-
-      maintenance: {
-        label: "ODRŽAVANJE",
-        color: "#ff4d62",
-        background: "rgba(255, 77, 98, 0.07)",
-        note: "UI je označen za lokalno održavanje."
-      }
+      operational: { label: "OPERATIVNA", color: "#24e96f", note: "UI je spreman za lokalne komande." },
+      standby: { label: "STANDBY", color: "#ffb000", note: "UI je u režimu čekanja." },
+      maintenance: { label: "ODRŽAVANJE", color: "#ff4d62", note: "UI je označen za lokalno održavanje." }
     };
 
-    const drawer =
-      document.getElementById("drawer");
-
-    const backdrop =
-      document.getElementById("backdrop");
-
-    const statusButton =
-      document.getElementById("statusButton");
-
-    const statusText =
-      document.getElementById("statusText");
-
-    const statusOptions =
-      document.getElementById("statusOptions");
-
-    const bridgeLog =
-      document.getElementById("bridgeLog");
-
-    const officeDoor =
-      document.getElementById("officeDoor");
-
-    const accessGate =
-      document.getElementById("accessGate");
-
-    const accessForm =
-      document.getElementById("accessForm");
-
-    const passwordInput =
-      document.getElementById("officePassword");
-
-    const passwordConfirm =
-      document.getElementById("officePasswordConfirm");
-
-    const confirmWrap =
-      document.getElementById("confirmWrap");
-
-    const gateHelp =
-      document.getElementById("gateHelp");
-
-    const gateError =
-      document.getElementById("gateError");
-
-    const office =
-      document.getElementById("office");
-
-    const officeStatus =
-      document.getElementById("officeStatus");
-
+    const drawer = document.getElementById("drawer");
+    const backdrop = document.getElementById("backdrop");
+    const statusButton = document.getElementById("statusButton");
+    const statusText = document.getElementById("statusText");
+    const statusOptions = document.getElementById("statusOptions");
+    const bridgeLog = document.getElementById("bridgeLog");
     let lastFocus = null;
-    let officeUnlocked = false;
+    let officeUnlocked = sessionStorage.getItem("whr-office-unlocked") === "yes";
 
-    try {
-      officeUnlocked =
-        sessionStorage.getItem(
-          "whr-office-unlocked"
-        ) === "yes";
-    } catch (error) {
-      officeUnlocked = false;
-    }
+    const officeDoor = document.getElementById("officeDoor");
+    const accessGate = document.getElementById("accessGate");
+    const accessForm = document.getElementById("accessForm");
+    const passwordInput = document.getElementById("officePassword");
+    const passwordConfirm = document.getElementById("officePasswordConfirm");
+    const confirmWrap = document.getElementById("confirmWrap");
+    const gateHelp = document.getElementById("gateHelp");
+    const gateError = document.getElementById("gateError");
+    const office = document.getElementById("office");
+    const officeStatus = document.getElementById("officeStatus");
 
-    function bytesToBase64(bytes) {
-      return btoa(
-        String.fromCharCode(...bytes)
-      );
-    }
-
-    function base64ToBytes(value) {
-      return Uint8Array.from(
-        atob(value),
-        character => character.charCodeAt(0)
-      );
-    }
-
-    async function derivePassword(
-      password,
-      salt
-    ) {
-      const encodedPassword =
-        new TextEncoder().encode(password);
-
-      const material =
-        await crypto.subtle.importKey(
-          "raw",
-          encodedPassword,
-          "PBKDF2",
-          false,
-          ["deriveBits"]
-        );
-
-      const bits =
-        await crypto.subtle.deriveBits(
-          {
-            name: "PBKDF2",
-            salt,
-            iterations: 120000,
-            hash: "SHA-256"
-          },
-          material,
-          256
-        );
-
-      return bytesToBase64(
-        new Uint8Array(bits)
-      );
+    function bytesToBase64(bytes) { return btoa(String.fromCharCode(...bytes)); }
+    function base64ToBytes(value) { return Uint8Array.from(atob(value), char => char.charCodeAt(0)); }
+    async function derivePassword(password, salt) {
+      const material = await crypto.subtle.importKey("raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveBits"]);
+      const bits = await crypto.subtle.deriveBits({ name: "PBKDF2", salt, iterations: 120000, hash: "SHA-256" }, material, 256);
+      return bytesToBase64(new Uint8Array(bits));
     }
 
     function showGate() {
-      let firstSetup = true;
-
-      try {
-        firstSetup =
-          !localStorage.getItem(
-            "whr-office-verifier"
-          );
-      } catch (error) {
-        gateError.textContent =
-          "Lokalno čuvanje lozinke nije dostupno.";
-      }
-
+      const firstSetup = !localStorage.getItem("whr-office-verifier");
       confirmWrap.hidden = !firstSetup;
       passwordConfirm.required = firstSetup;
-
-      gateHelp.textContent =
-        firstSetup
-          ? "Prvi ulaz: postavi lokalnu lozinku za ovaj pregledač."
-          : "Kucanje je primljeno. Unesi lokalnu lozinku za ulaz.";
-
+      gateHelp.textContent = firstSetup
+        ? "Prvi ulaz: postavi lokalnu lozinku za ovaj pregledač."
+        : "Kucanje je primljeno. Unesi lokalnu lozinku za ulaz.";
       gateError.textContent = "";
       accessForm.reset();
-
-      if (!accessGate.open) {
-        accessGate.showModal();
-      }
-
-      setTimeout(
-        () => passwordInput.focus(),
-        0
-      );
+      accessGate.showModal();
+      setTimeout(() => passwordInput.focus(), 0);
     }
 
     function knock() {
-      officeDoor.classList.remove(
-        "knocking"
-      );
-
+      officeDoor.classList.remove("knocking");
       void officeDoor.offsetWidth;
-
-      officeDoor.classList.add(
-        "knocking"
-      );
-
-      setTimeout(
-        showGate,
-        420
-      );
+      officeDoor.classList.add("knocking");
+      setTimeout(showGate, 420);
     }
 
-    function openOffice(
-      updateHash = true
-    ) {
-      if (!officeUnlocked) {
-        showGate();
-        return;
-      }
-
+    function openOffice(updateHash = true) {
+      if (!officeUnlocked) { showGate(); return; }
       closeRoute(false);
-
-      document.body.classList.add(
-        "office-open"
-      );
-
-      office.setAttribute(
-        "aria-hidden",
-        "false"
-      );
-
-      if (
-        updateHash &&
-        location.hash !== `#${officeRoute}`
-      ) {
-        history.pushState(
-          null,
-          "",
-          `#${officeRoute}`
-        );
-      }
+      document.body.classList.add("office-open");
+      office.setAttribute("aria-hidden", "false");
+      if (updateHash && location.hash !== `#${officeRoute}`) history.pushState(null, "", `#${officeRoute}`);
     }
 
-    function lockAndExit(
-      updateHash = true
-    ) {
+    function lockAndExit(updateHash = true) {
       officeUnlocked = false;
-
-      try {
-        sessionStorage.removeItem(
-          "whr-office-unlocked"
-        );
-      } catch (error) {
-        /* Nastavi zaključavanje. */
-      }
-
-      document.body.classList.remove(
-        "office-open"
-      );
-
-      office.setAttribute(
-        "aria-hidden",
-        "true"
-      );
-
-      if (
-        updateHash &&
-        location.hash === `#${officeRoute}`
-      ) {
-        history.pushState(
-          null,
-          "",
-          location.pathname + location.search
-        );
-      }
-
+      sessionStorage.removeItem("whr-office-unlocked");
+      document.body.classList.remove("office-open");
+      office.setAttribute("aria-hidden", "true");
+      if (updateHash && location.hash === `#${officeRoute}`) history.pushState(null, "", location.pathname + location.search);
       officeDoor.focus();
     }
 
-    function buildArchive() {
-      const grid =
-        document.getElementById("archiveGrid");
-
-      archiveNames.forEach(
-        (name, index) => {
-          const button =
-            document.createElement("button");
-
-          const number =
-            document.createElement("span");
-
-          const title =
-            document.createElement("strong");
-
-          const status =
-            document.createElement("small");
-
-          button.type = "button";
-          button.className = "archive-window";
-
-          number.className = "archive-number";
-          number.textContent =
-            String(index + 1).padStart(2, "0");
-
-          title.textContent = name;
-
-          status.innerHTML =
-            "STATUS = PRAZAN<br>" +
-            "APP_BRIDGE = NOT_CONNECTED";
-
-          button.append(
-            number,
-            title,
-            status
-          );
-
-          button.addEventListener(
-            "click",
-            () => {
-              document
-                .querySelectorAll(".archive-window")
-                .forEach(item => {
-                  item.classList.remove("selected");
-                });
-
-              button.classList.add("selected");
-
-              officeStatus.textContent =
-                `${String(index + 1).padStart(2, "0")} // ` +
-                `${name} — prozor je prazan i čeka ` +
-                "buduću APP montažu.";
-            }
-          );
-
-          grid.appendChild(button);
-        }
-      );
+    function clearOfficeSelection() {
+      document.querySelectorAll(".office-node, .archive-cube").forEach(item => item.classList.remove("selected"));
     }
 
-    accessForm.addEventListener(
-      "submit",
-      async event => {
-        event.preventDefault();
+    function buildOffice() {
+      const room = document.getElementById("controlRoom");
+      mainOffices.forEach(item => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = `office-node node-${item.key}`;
+        button.innerHTML = `<span class="node-number"></span><strong></strong><small></small>`;
+        button.querySelector(".node-number").textContent = item.number;
+        button.querySelector("strong").textContent = item.name;
+        button.querySelector("small").textContent = `${item.role} // NOT_CONNECTED`;
+        button.addEventListener("click", () => {
+          clearOfficeSelection();
+          button.classList.add("selected");
+          officeStatus.textContent = `${item.number} // ${item.name} — kancelarija čeka buduću APP montažu.`;
+        });
+        room.appendChild(button);
+      });
 
-        const password =
-          passwordInput.value;
+      const station = document.createElement("section");
+      station.className = "video-station";
+      station.innerHTML = `<div class="video-head"><span>VIDEO // MP4 MONITOR</span><span>LOCAL PLAYBACK</span></div><div id="videoScreen" class="video-screen"><video id="officeVideo" controls playsinline></video><div class="video-empty"><strong>VELIKI VIDEO EKRAN</strong><span>IZABERI LOKALNI MP4<br>FAJL NE NAPUŠTA UREĐAJ</span></div></div><div class="video-actions"><span id="videoName" class="video-name">MP4_APP_BRIDGE = NOT_CONNECTED</span><label class="video-pick" for="videoFile">IZABERI MP4</label><input id="videoFile" class="video-file" type="file" accept="video/mp4,video/*"></div>`;
+      room.appendChild(station);
 
-        try {
-          const savedVerifier =
-            localStorage.getItem(
-              "whr-office-verifier"
-            );
+      const videoFile = station.querySelector("#videoFile");
+      const video = station.querySelector("#officeVideo");
+      const screen = station.querySelector("#videoScreen");
+      const videoName = station.querySelector("#videoName");
+      let videoUrl = "";
+      videoFile.addEventListener("change", () => {
+        const file = videoFile.files && videoFile.files[0];
+        if (!file) return;
+        if (videoUrl) URL.revokeObjectURL(videoUrl);
+        videoUrl = URL.createObjectURL(file);
+        video.src = videoUrl;
+        screen.classList.add("has-video");
+        videoName.textContent = file.name;
+        officeStatus.textContent = `VIDEO // ${file.name} — lokalni MP4 je spreman za gledanje.`;
+        video.load();
+      });
 
-          if (!savedVerifier) {
-            if (password.length < 4) {
-              gateError.textContent =
-                "Lozinka mora imati najmanje 4 znaka.";
-              return;
-            }
+      const dock = document.getElementById("cubeDock");
+      cubeModules.forEach(item => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "archive-cube";
+        button.style.setProperty("--cube-color", item.color);
+        button.innerHTML = `<span class="cube-number"></span><span class="cube-dot" aria-hidden="true"></span><strong></strong>`;
+        button.querySelector(".cube-number").textContent = item.number;
+        button.querySelector("strong").textContent = item.name;
+        button.addEventListener("click", () => {
+          clearOfficeSelection();
+          button.classList.add("selected");
+          officeStatus.textContent = `${item.number} // ${item.name} — pomoćni modul čeka buduću APP montažu.`;
+        });
+        dock.appendChild(button);
+      });
+    }
 
-            if (
-              password !==
-              passwordConfirm.value
-            ) {
-              gateError.textContent =
-                "Lozinke se ne podudaraju.";
-              return;
-            }
-
-            const salt =
-              crypto.getRandomValues(
-                new Uint8Array(16)
-              );
-
-            const verifier =
-              await derivePassword(
-                password,
-                salt
-              );
-
-            localStorage.setItem(
-              "whr-office-salt",
-              bytesToBase64(salt)
-            );
-
-            localStorage.setItem(
-              "whr-office-verifier",
-              verifier
-            );
-          } else {
-            const savedSalt =
-              localStorage.getItem(
-                "whr-office-salt"
-              );
-
-            if (!savedSalt) {
-              gateError.textContent =
-                "Lokalni zapis lozinke nije potpun.";
-              return;
-            }
-
-            const salt =
-              base64ToBytes(savedSalt);
-
-            const candidate =
-              await derivePassword(
-                password,
-                salt
-              );
-
-            if (candidate !== savedVerifier) {
-              gateError.textContent =
-                "Pristup odbijen: pogrešna lozinka.";
-              return;
-            }
-          }
-
-          officeUnlocked = true;
-
-          sessionStorage.setItem(
-            "whr-office-unlocked",
-            "yes"
-          );
-
-          accessGate.close();
-          openOffice(true);
-        } catch (error) {
-          gateError.textContent =
-            "Lokalna provera nije dostupna u ovom pregledaču.";
+    accessForm.addEventListener("submit", async event => {
+      event.preventDefault();
+      const password = passwordInput.value;
+      const savedVerifier = localStorage.getItem("whr-office-verifier");
+      try {
+        if (!savedVerifier) {
+          if (password.length < 4) { gateError.textContent = "Lozinka mora imati najmanje 4 znaka."; return; }
+          if (password !== passwordConfirm.value) { gateError.textContent = "Lozinke se ne podudaraju."; return; }
+          const salt = crypto.getRandomValues(new Uint8Array(16));
+          localStorage.setItem("whr-office-salt", bytesToBase64(salt));
+          localStorage.setItem("whr-office-verifier", await derivePassword(password, salt));
+        } else {
+          const salt = base64ToBytes(localStorage.getItem("whr-office-salt"));
+          if (await derivePassword(password, salt) !== savedVerifier) { gateError.textContent = "Pristup odbijen: pogrešna lozinka."; return; }
         }
-      }
-    );
+        officeUnlocked = true;
+        sessionStorage.setItem("whr-office-unlocked", "yes");
+        accessGate.close();
+        openOffice(true);
+      } catch (_) { gateError.textContent = "Lokalna provera nije dostupna u ovom pregledaču."; }
+    });
 
-    officeDoor.addEventListener(
-      "click",
-      knock
-    );
-
-    document
-      .getElementById("cancelGate")
-      .addEventListener(
-        "click",
-        () => accessGate.close()
-      );
-
-    document
-      .getElementById("lockOffice")
-      .addEventListener(
-        "click",
-        () => lockAndExit()
-      );
+    officeDoor.addEventListener("click", knock);
+    document.getElementById("cancelGate").addEventListener("click", () => accessGate.close());
+    document.getElementById("lockOffice").addEventListener("click", () => lockAndExit());
 
     function savedStatus() {
       try {
-        const value =
-          localStorage.getItem(
-            "whr-magistrala-status"
-          );
-
-        return statusConfig[value]
-          ? value
-          : "operational";
-      } catch (error) {
-        return "operational";
-      }
+        const value = localStorage.getItem("whr-magistrala-status");
+        return statusConfig[value] ? value : "operational";
+      } catch (_) { return "operational"; }
     }
 
     function setStatus(key) {
-      const selected =
-        statusConfig[key]
-          ? key
-          : "operational";
-
-      const state =
-        statusConfig[selected];
-
-      statusButton.style.setProperty(
-        "--status-color",
-        state.color
-      );
-
-      statusButton.style.background =
-        state.background;
-
-      statusText.textContent =
-        `MAGISTRALA: ${state.label}`;
-
-      bridgeLog.textContent =
-        `[LOCAL] ${state.note}\n` +
-        `[STATE] ${selected.toUpperCase()}\n` +
-        "[BACKEND] NOT_CONNECTED";
-
-      document
-        .querySelectorAll(".status-choice")
-        .forEach(button => {
-          button.setAttribute(
-            "aria-pressed",
-            String(
-              button.dataset.status === selected
-            )
-          );
-        });
-
-      try {
-        localStorage.setItem(
-          "whr-magistrala-status",
-          selected
-        );
-      } catch (error) {
-        /* Portal radi i bez čuvanja statusa. */
-      }
+      const selected = statusConfig[key] ? key : "operational";
+      const state = statusConfig[selected];
+      statusButton.style.setProperty("--status-color", state.color);
+      statusText.textContent = `MAGISTRALA: ${state.label}`;
+      bridgeLog.textContent = `[LOCAL] ${state.note}\n[STATE] ${selected.toUpperCase()}\n[BACKEND] NOT_CONNECTED`;
+      document.querySelectorAll(".status-choice").forEach(button => {
+        button.setAttribute("aria-pressed", String(button.dataset.status === selected));
+      });
+      try { localStorage.setItem("whr-magistrala-status", selected); } catch (_) {}
     }
 
     function buildStatusOptions() {
-      Object
-        .entries(statusConfig)
-        .forEach(([key, state]) => {
-          const button =
-            document.createElement("button");
-
-          const title =
-            document.createElement("strong");
-
-          const description =
-            document.createElement("small");
-
-          button.type = "button";
-          button.className = "status-choice";
-          button.dataset.status = key;
-
-          button.style.setProperty(
-            "--choice",
-            state.color
-          );
-
-          title.textContent = state.label;
-          description.textContent = state.note;
-
-          button.append(
-            title,
-            description
-          );
-
-          button.addEventListener(
-            "click",
-            () => setStatus(key)
-          );
-
-          statusOptions.appendChild(button);
-        });
+      Object.entries(statusConfig).forEach(([key, state]) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "status-choice";
+        button.dataset.status = key;
+        button.style.setProperty("--choice", state.color);
+        button.innerHTML = `<strong>${state.label}</strong><small>${state.note}</small>`;
+        button.addEventListener("click", () => setStatus(key));
+        statusOptions.appendChild(button);
+      });
     }
 
-    function openRoute(
-      route,
-      updateHash = true
-    ) {
-      if (!routes.has(route)) {
-        return;
-      }
-
+    function openRoute(route, updateHash = true) {
+      if (!routes.has(route)) return;
       lastFocus = document.activeElement;
-
-      document
-        .querySelectorAll(".panel")
-        .forEach(panel => {
-          panel.classList.toggle(
-            "active",
-            panel.dataset.panel === route
-          );
-        });
-
-      document
-        .getElementById("routeLabel")
-        .textContent =
-          `ROUTE // #${route}`;
-
-      document.body.classList.add(
-        "drawer-open"
-      );
-
-      drawer.setAttribute(
-        "aria-hidden",
-        "false"
-      );
-
-      backdrop.setAttribute(
-        "aria-hidden",
-        "false"
-      );
-
-      if (
-        updateHash &&
-        location.hash !== `#${route}`
-      ) {
-        history.pushState(
-          null,
-          "",
-          `#${route}`
-        );
-      }
-
-      document
-        .getElementById("closeDrawer")
-        .focus();
+      document.querySelectorAll(".panel").forEach(panel => panel.classList.toggle("active", panel.dataset.panel === route));
+      document.getElementById("routeLabel").textContent = `ROUTE // #${route}`;
+      document.body.classList.add("drawer-open");
+      drawer.setAttribute("aria-hidden", "false");
+      backdrop.setAttribute("aria-hidden", "false");
+      if (updateHash && location.hash !== `#${route}`) history.pushState(null, "", `#${route}`);
+      document.getElementById("closeDrawer").focus();
     }
 
-    function closeRoute(
-      updateHash = true
-    ) {
-      document.body.classList.remove(
-        "drawer-open"
-      );
-
-      drawer.setAttribute(
-        "aria-hidden",
-        "true"
-      );
-
-      backdrop.setAttribute(
-        "aria-hidden",
-        "true"
-      );
-
-      if (
-        updateHash &&
-        location.hash
-      ) {
-        history.pushState(
-          null,
-          "",
-          location.pathname + location.search
-        );
-      }
-
-      if (
-        lastFocus &&
-        typeof lastFocus.focus === "function"
-      ) {
-        lastFocus.focus();
-      }
+    function closeRoute(updateHash = true) {
+      document.body.classList.remove("drawer-open");
+      drawer.setAttribute("aria-hidden", "true");
+      backdrop.setAttribute("aria-hidden", "true");
+      if (updateHash && location.hash) history.pushState(null, "", location.pathname + location.search);
+      if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
     }
 
     function syncHash() {
-      const route =
-        location.hash.slice(1);
-
+      const route = location.hash.slice(1);
       if (route === officeRoute) {
-        if (officeUnlocked) {
-          openOffice(false);
-        } else {
-          document.body.classList.remove(
-            "office-open"
-          );
-
-          showGate();
-        }
-
+        if (officeUnlocked) openOffice(false);
+        else { document.body.classList.remove("office-open"); showGate(); }
         return;
       }
-
-      document.body.classList.remove(
-        "office-open"
-      );
-
-      if (routes.has(route)) {
-        openRoute(route, false);
-      } else {
-        closeRoute(false);
-      }
+      document.body.classList.remove("office-open");
+      routes.has(route) ? openRoute(route, false) : closeRoute(false);
     }
 
-    document
-      .querySelectorAll(".route-button")
-      .forEach(button => {
-        button.addEventListener(
-          "click",
-          () => openRoute(
-            button.dataset.route
-          )
-        );
-      });
-
-    statusButton.addEventListener(
-      "click",
-      () => openRoute("control-bridge")
-    );
-
-    document
-      .getElementById("closeDrawer")
-      .addEventListener(
-        "click",
-        () => closeRoute()
-      );
-
-    backdrop.addEventListener(
-      "click",
-      () => closeRoute()
-    );
-
-    window.addEventListener(
-      "hashchange",
-      syncHash
-    );
-
-    window.addEventListener(
-      "popstate",
-      syncHash
-    );
-
-    document.addEventListener(
-      "keydown",
-      event => {
-        if (
-          event.key === "Escape" &&
-          document.body.classList.contains(
-            "drawer-open"
-          )
-        ) {
-          closeRoute();
-        }
-      }
-    );
+    document.querySelectorAll(".route-button").forEach(button => button.addEventListener("click", () => openRoute(button.dataset.route)));
+    statusButton.addEventListener("click", () => openRoute("control-bridge"));
+    document.getElementById("closeDrawer").addEventListener("click", () => closeRoute());
+    backdrop.addEventListener("click", () => closeRoute());
+    window.addEventListener("hashchange", syncHash);
+    window.addEventListener("popstate", syncHash);
+    document.addEventListener("keydown", event => { if (event.key === "Escape" && document.body.classList.contains("drawer-open")) closeRoute(); });
 
     buildStatusOptions();
-    buildArchive();
+    buildOffice();
     setStatus(savedStatus());
     syncHash();
   </script>
