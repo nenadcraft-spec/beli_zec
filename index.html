@@ -256,139 +256,9 @@
             }
         });
 
-        // --- LOCAL STORAGE STATUS ---
-        const statusEl = document.getElementById('runtimeStatus');
-        const statuses = ["MAGISTRALA: OPERATIVNA", "MAGISTRALA: STAND-BY", "MAGISTRALA: QA MODE"];
-        
-        // Load saved status
-        const savedStatus = localStorage.getItem('whr_status');
-        if (savedStatus && statuses.includes(savedStatus)) {
-            statusEl.textContent = savedStatus;
-        }
-
-        // Toggle status on click
-        statusEl.addEventListener('click', () => {
-            const current = statusEl.textContent;
-            const nextIndex = (statuses.indexOf(current) + 1) % statuses.length;
-            const newStatus = statuses[nextIndex];
-            statusEl.textContent = newStatus;
-            localStorage.setItem('whr_status', newStatus);
-        });
-
-        // --- INIT ---
-        // Check initial hash on load
-        const initialHash = window.location.hash.substring(1);
-        if (initialHash && moduleData[initialHash]) {
-            openPanel(initialHash);
-        }
-        <script>
-        "use strict";
-
-        // --- PODACI ZA MODULE ---
-        const moduleData = {
-            engine: {
-                title: "COLOR ENGINE v2.0",
-                content: `
-                    <h3>Status</h3>
-                    <p>Simulacija je spremna za pokretanje. Render engine koristi Canvas 2D API sa optimizovanim delta-time loop-om.</p>
-                    <h3>Specifikacije</h3>
-                    <ul>
-                        <li>Fizika: Elastični sudari čestica</li>
-                        <li>RNG: Mulberry32 (Seed-based)</li>
-                        <li>Boje: Linearno mešanje RGB kanala</li>
-                    </ul>
-                    <div class="bridge-placeholder">[ APP BRIDGE PLACEHOLDER ]<br>Povezivanje sa lokalnim Flask serverom (port 5000) biće implementirano u v2.1.</div>
-                `
-            },
-            bridge: {
-                title: "BELI_ZEC CONTROL BRIDGE",
-                content: `
-                    <h3>QA Logovi</h3>
-                    <p>Registar logova prati sve promene u sistemu. Trenutno nema aktivnih grešaka.</p>
-                    <h3>Zero Deviation</h3>
-                    <ul>
-                        <li>HTML Struktura: PASS</li>
-                        <li>CSS Integracija: PASS</li>
-                        <li>JS Sintaksa: PASS</li>
-                    </ul>
-                    <div class="bridge-placeholder">[ APP BRIDGE PLACEHOLDER ]<br>Automatsko povlačenje logova iz baze čeka definisanje API rute.</div>
-                `
-            },
-            ai: {
-                title: "AI MAŠINSKA SALA",
-                content: `
-                    <h3>Aktivni Agenti</h3>
-                    <ul>
-                        <li><strong>ChatGPT:</strong> Softverska arhitektura i logika.</li>
-                        <li><strong>Gemini:</strong> Vizuelni identitet i interaktivni kod.</li>
-                        <li><strong>Qwen:</strong> Sinteza, QA i integracija svih slojeva.</li>
-                    </ul>
-                    <h3>Uloga</h3>
-                    <p>Ovaj sloj generiše <strong>DOKAZ</strong> (šta je vidljivo). Nikada ne donosi konačne odluke. Sve što nije u biblioteci je <em>NEDEFINISANO</em>.</p>
-                `
-            },
-            oi: {
-                title: "OI KOMANDNI MOST",
-                content: `
-                    <h3>Aktivni Identiteti</h3>
-                    <ul>
-                        <li><strong>Beli Zec:</strong> Arhitekta, izvor komande, nadzor AI linije.</li>
-                        <li><strong>Lamija:</strong> Administrator, identitetski simbol (🌙 U+1F319).</li>
-                    </ul>
-                    <h3>Uloga</h3>
-                    <p>Ovaj sloj daje <strong>TUMAČENJE</strong> i <strong>KONAČNU ODLUKU</strong>. Samo čovek može da zaključa zapis i prebaci ga u trajnu arhivu.</p>
-                `
-            }
-        };
-
-        // --- HASH ROUTING & PANEL LOGIC ---
-        const sidePanel = document.getElementById('sidePanel');
-        const panelTitle = document.getElementById('panelTitle');
-        const panelContent = document.getElementById('panelContent');
-
-        function openPanel(target) {
-            const data = moduleData[target];
-            if (!data) return;
-            
-            panelTitle.textContent = data.title;
-            panelContent.innerHTML = data.content;
-            sidePanel.classList.add('open');
-            window.location.hash = target;
-        }
-
-        function closePanel() {
-            sidePanel.classList.remove('open');
-            history.pushState("", document.title, window.location.pathname + window.location.search);
-        }
-
-        // Listen for hash changes (browser back/forward)
-        window.addEventListener('hashchange', () => {
-            const hash = window.location.hash.substring(1);
-            if (hash && moduleData[hash]) {
-                openPanel(hash);
-            } else {
-                closePanel();
-            }
-        });
-
-        // Escape key to close panel
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && sidePanel.classList.contains('open')) {
-                closePanel();
-            }
-        });
-
-        // Close panel when clicking outside
-        document.addEventListener('click', (e) => {
-            if (sidePanel.classList.contains('open') && !sidePanel.contains(e.target) && !e.target.closest('.module-card')) {
-                closePanel();
-            }
-        });
-
-        // --- FIX: GLOBALNI LISTENER ZA KARTICE (REŠAVA MRTVE ZONE) ---
+        // --- GLOBALNI LISTENER ZA KARTICE (Rešava mrtve zone) ---
         document.querySelectorAll('.module-card').forEach(card => {
             card.addEventListener('click', (e) => {
-                // Ako je kliknuto direktno na dugme, ignorišemo jer dugme ima svoj stopPropagation
                 if (e.target.closest('.action-button')) return;
                 
                 const target = card.getAttribute('data-target');
@@ -402,13 +272,11 @@
         const statusEl = document.getElementById('runtimeStatus');
         const statuses = ["MAGISTRALA: OPERATIVNA", "MAGISTRALA: STAND-BY", "MAGISTRALA: QA MODE"];
         
-        // Load saved status
         const savedStatus = localStorage.getItem('whr_status');
         if (savedStatus && statuses.includes(savedStatus)) {
             statusEl.textContent = savedStatus;
         }
 
-        // Toggle status on click
         statusEl.addEventListener('click', () => {
             const current = statusEl.textContent;
             const nextIndex = (statuses.indexOf(current) + 1) % statuses.length;
@@ -418,7 +286,6 @@
         });
 
         // --- INIT ---
-        // Check initial hash on load
         const initialHash = window.location.hash.substring(1);
         if (initialHash && moduleData[initialHash]) {
             openPanel(initialHash);
