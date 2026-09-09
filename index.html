@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="theme-color" content="#020308">
-    <title>WHR STUDIOS — Centralni Portal v1.0</title>
+    <title>WHR STUDIOS — Centralni Portal v1.1 (Dualna Arhitektura)</title>
     <style>
         :root {
             --bg-deep: #020308;
@@ -160,7 +160,7 @@
         </header>
 
         <main class="bridge-grid">
-            <!-- Modul 01: Engine Core -->
+            <!-- Modul 01: Engine Core (Original) -->
             <section class="module-card">
                 <div>
                     <p class="module-meta">LABORATORY CORE</p>
@@ -170,7 +170,7 @@
                 <button class="action-button" onclick="bridgeCommand('LAUNCH_ENGINE')">POKRENI SIMULACIJU</button>
             </section>
 
-            <!-- Modul 02: Master Pipeline -->
+            <!-- Modul 02: Master Pipeline (Original) -->
             <section class="module-card">
                 <div>
                     <p class="module-meta">AUTOMATION & QA</p>
@@ -178,6 +178,26 @@
                     <p class="module-desc">Centralni upravljački sloj i verifikacioni Gate. Prati determinističko generisanje frejmova, sakuplja ffprobe logove i osigurava Zero Deviation standard.</p>
                 </div>
                 <button class="action-button" onclick="bridgeCommand('OPEN_MAGISTRALA')">OTVORI REGISTAR LOGOVA</button>
+            </section>
+
+            <!-- Modul 03: AI Mašinska sala (NOVO - AI LINIJA) -->
+            <section class="module-card">
+                <div>
+                    <p class="module-meta">AI LINIJA // SISTEM</p>
+                    <h2 class="module-name">AI Mašinska sala</h2>
+                    <p class="module-desc">CHATGPT + GEMINI + QWEN. Biblioteka, poreklo, obrada, klasifikacija i generisanje DOKAZ-a.</p>
+                </div>
+                <!-- Bez dugmeta: čisto strukturni element -->
+            </section>
+
+            <!-- Modul 04: OI Komandni most (NOVO - OI LINIJA) -->
+            <section class="module-card">
+                <div>
+                    <p class="module-meta">OI LINIJA // ČOVEK</p>
+                    <h2 class="module-name">OI Komandni most</h2>
+                    <p class="module-desc">BELI_ZEC + LAMIJA. Unos, pregled, kontrola, NADZOR i konačna LJUDSKA_POTVRDA (TUMAČENJE).</p>
+                </div>
+                <!-- Bez dugmeta: čisto strukturni element -->
             </section>
         </main>
     </div>
