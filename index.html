@@ -4,13 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#020308">
-  <title>WHR STUDIOS — Centralni Portal v2</title>
+  <title>WHR STUDIOS — Centralni Portal v3</title>
 
   <style>
-    :root {S
-      --bg-deep: #020308;S
-      --bg-main: #060811;
-      --bg-panel: rgba(10, 14, 25, 0.94);
+    :root {
+      --bg: #020308;
+      --panel: rgba(10, 14, 25, 0.94);
       --border: rgba(255, 255, 255, 0.12);
       --text: #f5f8ff;
       --soft: #aeb8cc;
@@ -18,8 +17,6 @@
       --amber: #ffb000;
       --green: #24e96f;
       --red: #ff4d62;
-      --purple: #b88cff;
-      --header-h: 71px;
     }
 
     * {
@@ -28,7 +25,7 @@
 
     html {
       min-height: 100%;
-      background: var(--bg-deep);
+      background: var(--bg);
     }
 
     body {
@@ -44,7 +41,7 @@
           rgba(0, 242, 255, 0.08),
           transparent 28rem
         ),
-        var(--bg-deep);
+        var(--bg);
       font-family: "Segoe UI", Roboto, system-ui, sans-serif;
     }
 
@@ -68,12 +65,14 @@
     }
 
     button,
-    a {
+    a,
+    input {
       font: inherit;
     }
 
     button:focus-visible,
-    a:focus-visible {
+    a:focus-visible,
+    input:focus-visible {
       outline: 2px solid var(--cyan);
       outline-offset: 3px;
     }
@@ -89,7 +88,7 @@
       position: sticky;
       top: 0;
       z-index: 20;
-      min-height: var(--header-h);
+      min-height: 71px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -118,15 +117,17 @@
     }
 
     .status-button {
+      --status-color: var(--green);
+
       flex: 0 0 auto;
       display: inline-flex;
       align-items: center;
       gap: 8px;
       min-height: 38px;
       padding: 7px 11px;
-      border: 1px solid var(--status-color, var(--green));
+      border: 1px solid var(--status-color);
       border-radius: 8px;
-      color: var(--status-color, var(--green));
+      color: var(--status-color);
       background: rgba(36, 233, 111, 0.07);
       font-size: 10px;
       font-weight: 900;
@@ -143,9 +144,12 @@
     }
 
     .hero {
-      display: flex;
-      justify-content: space-between;
-      gap: 28px;
+      display: grid;
+      grid-template-columns:
+        minmax(0, 1.1fr)
+        minmax(320px, 0.9fr);
+      align-items: stretch;
+      gap: 32px;
       padding: 38px 0 25px;
     }
 
@@ -173,11 +177,96 @@
     }
 
     .version {
-      align-self: end;
       color: var(--amber);
-      font: 900 11px/1 ui-monospace, monospace;
-      letter-spacing: 2px;
+      font: 900 10px/1 ui-monospace, monospace;
+      letter-spacing: 1.5px;
     }
+
+    /* VRATA KANCELARIJE */
+
+    .office-door {
+      position: relative;
+      min-height: 245px;
+      overflow: hidden;
+      padding: 0;
+      border: 1px solid rgba(0, 242, 255, 0.24);
+      border-radius: 16px;
+      color: var(--text);
+      background: #050810;
+      box-shadow: 0 14px 38px rgba(0, 0, 0, 0.42);
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .office-door img {
+      width: 100%;
+      height: 100%;
+      min-height: 245px;
+      display: block;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0.72;
+      transition:
+        opacity 160ms ease,
+        transform 240ms ease;
+    }
+
+    .office-door:hover img {
+      opacity: 0.92;
+      transform: scale(1.015);
+    }
+
+    .office-door.knocking {
+      animation: knock 180ms ease 2;
+    }
+
+    .door-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 18px;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(2, 3, 8, 0.18),
+          rgba(2, 3, 8, 0.12) 45%,
+          rgba(2, 3, 8, 0.95)
+        );
+    }
+
+    .door-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .door-label {
+      color: var(--cyan);
+      font: 900 10px/1.3 ui-monospace, monospace;
+      letter-spacing: 1.4px;
+    }
+
+    .door-bottom strong {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 19px;
+    }
+
+    .door-bottom span {
+      color: var(--soft);
+      font: 800 9px/1.4 ui-monospace, monospace;
+      letter-spacing: 1px;
+    }
+
+    @keyframes knock {
+      50% {
+        transform: translateX(3px);
+      }
+    }
+
+    /* MODULI */
 
     .line-label {
       display: flex;
@@ -200,10 +289,6 @@
       color: var(--cyan);
     }
 
-    .line-label.oi {
-      color: var(--amber);
-    }
-
     .grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -221,7 +306,7 @@
       padding: 24px;
       border: 1px solid var(--border);
       border-radius: 16px;
-      background: var(--bg-panel);
+      background: var(--panel);
       box-shadow: 0 14px 36px rgba(0, 0, 0, 0.32);
     }
 
@@ -263,7 +348,7 @@
       z-index: 2;
       width: 100%;
       min-height: 44px;
-      border: 1px solid var(--accent, rgba(0, 242, 255, 0.38));
+      border: 1px solid var(--accent, var(--cyan));
       border-radius: 10px;
       color: var(--accent, var(--cyan));
       background: rgba(0, 242, 255, 0.06);
@@ -273,12 +358,10 @@
       cursor: pointer;
       transition:
         transform 120ms ease,
-        border-color 120ms ease,
         background 120ms ease;
     }
 
     .action:hover {
-      border-color: var(--accent, var(--cyan));
       background: rgba(0, 242, 255, 0.11);
     }
 
@@ -311,13 +394,15 @@
       text-decoration: none;
     }
 
+    /* BOČNI PANELI */
+
     .backdrop {
       position: fixed;
       inset: 0;
       z-index: 40;
-      background: rgba(0, 0, 0, 0.64);
       opacity: 0;
       pointer-events: none;
+      background: rgba(0, 0, 0, 0.64);
       transition: opacity 180ms ease;
     }
 
@@ -330,10 +415,10 @@
       height: 100dvh;
       overflow-y: auto;
       transform: translateX(102%);
-      transition: transform 210ms ease;
       border-left: 1px solid var(--border);
       background: #070a12;
       box-shadow: -20px 0 60px rgba(0, 0, 0, 0.55);
+      transition: transform 210ms ease;
     }
 
     body.drawer-open {
@@ -360,7 +445,6 @@
       border-bottom: 1px solid var(--border);
       background: rgba(7, 10, 18, 0.92);
       backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
     }
 
     .route {
@@ -403,8 +487,8 @@
       padding: 16px;
       border: 1px solid var(--border);
       border-radius: 10px;
-      background: #03050a;
       color: #c8d4e8;
+      background: #03050a;
       font: 12px/1.7 ui-monospace, monospace;
       white-space: pre-wrap;
     }
@@ -413,7 +497,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin: 18px 0A;
+      margin: 18px 0;
     }
 
     .tag {
@@ -428,8 +512,8 @@
     .notice {
       padding: 15px;
       border-left: 3px solid var(--amber);
-      background: rgba(255, 176, 0, 0.07);
       color: #f4d99a;
+      background: rgba(255, 176, 0, 0.07);
       font-size: 12px;
       line-height: 1.65;
     }
@@ -451,8 +535,8 @@
       border-radius: 9px;
       color: var(--text);
       background: transparent;
-      cursor: pointer;
       text-align: left;
+      cursor: pointer;
     }
 
     .status-choice[aria-pressed="true"] {
@@ -462,6 +546,207 @@
 
     .status-choice small {
       color: var(--soft);
+    }
+
+    /* KUCANJE I LOZINKA */
+
+    dialog {
+      width: min(440px, calc(100% - 28px));
+      padding: 0;
+      border: 1px solid rgba(0, 242, 255, 0.32);
+      border-radius: 14px;
+      color: var(--text);
+      background: #080b14;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.72);
+    }
+
+    dialog::backdrop {
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(5px);
+    }
+
+    .gate {
+      padding: 24px;
+    }
+
+    .gate h2 {
+      margin: 8px 0 10px;
+      font-size: 25px;
+    }
+
+    .gate p {
+      color: var(--soft);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .gate label {
+      display: block;
+      margin: 16px 0 7px;
+      color: var(--cyan);
+      font: 800 10px/1 ui-monospace, monospace;
+      letter-spacing: 1px;
+    }
+
+    .gate input {
+      width: 100%;
+      min-height: 46px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      color: var(--text);
+      background: #03050a;
+      font: 14px ui-monospace, monospace;
+    }
+
+    .gate-actions {
+      display: flex;
+      gap: 9px;
+      margin-top: 20px;
+    }
+
+    .gate-actions button {
+      flex: 1;
+      min-height: 42px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      color: var(--text);
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .gate-actions .primary {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      background: rgba(0, 242, 255, 0.07);
+    }
+
+    .gate-error {
+      min-height: 19px;
+      margin: 10px 0 0 !important;
+      color: var(--red) !important;
+    }
+
+    /* IZOLOVANA KANCELARIJA */
+
+    .office {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: none;
+      overflow-y: auto;
+      background: var(--bg);
+    }
+
+    body.office-open {
+      overflow: hidden;
+    }
+
+    body.office-open .office {
+      display: block;
+    }
+
+    .office-shell {
+      width: min(1240px, 100%);
+      min-height: 100%;
+      margin: auto;
+      padding: 22px;
+    }
+
+    .office-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .office-title small {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--red);
+      font: 900 9px/1 ui-monospace, monospace;
+      letter-spacing: 1.5px;
+    }
+
+    .office-title h1 {
+      font-size: clamp(25px, 4vw, 42px);
+      letter-spacing: -1px;
+    }
+
+    .lock-exit {
+      min-height: 42px;
+      padding: 9px 13px;
+      border: 1px solid var(--red);
+      border-radius: 9px;
+      color: var(--red);
+      background: rgba(255, 77, 98, 0.06);
+      font: 900 9px/1 ui-monospace, monospace;
+      letter-spacing: 1px;
+      cursor: pointer;
+    }
+
+    .office-intro {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 24px 0 16px;
+      color: var(--soft);
+      font: 800 10px/1.6 ui-monospace, monospace;
+      letter-spacing: 1px;
+    }
+
+    .archive-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .archive-window {
+      position: relative;
+      min-height: 138px;
+      padding: 17px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      background: rgba(10, 14, 25, 0.9);
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .archive-window:hover,
+    .archive-window.selected {
+      border-color: var(--cyan);
+      background: rgba(0, 242, 255, 0.045);
+    }
+
+    .archive-number {
+      color: rgba(255, 255, 255, 0.18);
+      font: 900 24px/1 ui-monospace, monospace;
+    }
+
+    .archive-window strong {
+      display: block;
+      margin: 18px 0 8px;
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+
+    .archive-window small {
+      color: var(--soft);
+      font: 800 8px/1.4 ui-monospace, monospace;
+      letter-spacing: 0.8px;
+    }
+
+    .office-status {
+      min-height: 42px;
+      margin-top: 14px;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      color: var(--soft);
+      font: 10px/1.6 ui-monospace, monospace;
     }
 
     @media (max-width: 680px) {
@@ -491,7 +776,7 @@
       }
 
       .hero {
-        display: block;
+        grid-template-columns: 1fr;
         padding: 28px 0 18px;
       }
 
@@ -499,9 +784,9 @@
         font-size: 13px;
       }
 
-      .version {
-        display: block;
-        margin-top: 16px;
+      .office-door,
+      .office-door img {
+        min-height: 210px;
       }
 
       .grid {
@@ -519,6 +804,26 @@
 
       .drawer {
         border-left: 0;
+      }
+
+      .office-shell {
+        padding: 14px;
+      }
+
+      .office-head,
+      .office-intro {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .archive-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 390px) {
+      .archive-grid {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -563,13 +868,40 @@
           </h1>
 
           <p class="hero-copy">
-            Lokalna komandna površina za pregled modula, stanja i
-            budućih integracija. Sve kontrole u ovoj verziji rade
-            unutar pregledača.
+            Lokalna komandna površina za pregled modula, stanja
+            i budućih integracija. Sve kontrole u ovoj verziji
+            rade unutar pregledača.
           </p>
         </div>
 
-        <span class="version">BUILD 2.0 // LOCAL</span>
+        <button
+          id="officeDoor"
+          class="office-door"
+          type="button"
+          aria-label="Pokucaj na vrata Kancelarije Belog Zeca"
+        >
+          <img
+            src="assets/kancelarija-vrata.png"
+            alt="Vrata Kancelarije Belog Zeca sa Džerijem i kokicama"
+          >
+
+          <span class="door-overlay">
+            <span class="door-top">
+              <span class="door-label">
+                101 // PRIVATNA KANCELARIJA
+              </span>
+
+              <span class="version">
+                BUILD 3.0
+              </span>
+            </span>
+
+            <span class="door-bottom">
+              <strong>Kancelarija Belog Zeca</strong>
+              <span>POKUCAJ ZA PRISTUP →</span>
+            </span>
+          </span>
+        </button>
       </section>
 
       <div class="line-label">
@@ -713,14 +1045,11 @@
       </button>
     </header>
 
-    <section
-      class="panel"
-      data-panel="color-engine"
-    >
+    <section class="panel" data-panel="color-engine">
       <h2>Color Engine v2.0</h2>
 
       <p class="panel-lead">
-        Kontrolna tačka simulacionog modula. U statičkoj v2
+        Kontrolna tačka simulacionog modula. U statičkoj v3
         verziji ovo je pregled spremnosti, ne pokretanje
         eksternog engine-a.
       </p>
@@ -736,20 +1065,17 @@ EXECUTION_MODE = LOCAL_UI_ONLY
 SIMULATION_RUNTIME = NOT_EMBEDDED</div>
 
       <div class="notice">
-        Za stvarno pokretanje simulacije kasnije povezati APP
-        bridge sa eksplicitnom komandom i odgovorom o uspehu.
+        Za stvarno pokretanje simulacije kasnije povezati
+        APP bridge sa eksplicitnom komandom i odgovorom.
       </div>
     </section>
 
-    <section
-      class="panel"
-      data-panel="control-bridge"
-    >
+    <section class="panel" data-panel="control-bridge">
       <h2>beli_zec Control Bridge</h2>
 
       <p class="panel-lead">
         Magistrala čuva lokalni status interfejsa. Izaberi
-        operativno stanje; izbor se pamti samo u ovom pregledaču.
+        operativno stanje; izbor se pamti samo u pregledaču.
       </p>
 
       <div
@@ -768,14 +1094,11 @@ SIMULATION_RUNTIME = NOT_EMBEDDED</div>
       </div>
     </section>
 
-    <section
-      class="panel"
-      data-panel="ai-sala"
-    >
+    <section class="panel" data-panel="ai-sala">
       <h2>AI Mašinska sala</h2>
 
       <p class="panel-lead">
-        Sistemska linija je namenski odvojena od ljudske potvrde.
+        Sistemska linija je odvojena od ljudske potvrde.
       </p>
 
       <div class="terminal-box">ULAZ → BIBLIOTEKA / POREKLO
@@ -785,15 +1108,11 @@ KONAČNA POTVRDA → NIJE U AI LINIJI</div>
 
       <div class="notice">
         Imena servisa označavaju planiranu arhitekturu.
-        Ovaj fajl ne šalje mrežne zahteve i ne tvrdi da su
-        AI servisi povezani.
+        Ovaj fajl ne šalje mrežne zahteve.
       </div>
     </section>
 
-    <section
-      class="panel"
-      data-panel="oi-most"
-    >
+    <section class="panel" data-panel="oi-most">
       <h2>OI Komandni most</h2>
 
       <p class="panel-lead">
@@ -812,15 +1131,12 @@ GRANICA → AI NE POTVRĐUJE UMESTO ČOVEKA</div>
       </div>
     </section>
 
-    <section
-      class="panel"
-      data-panel="app-bridge"
-    >
+    <section class="panel" data-panel="app-bridge">
       <h2>APP Bridge</h2>
 
       <p class="panel-lead">
-        Jasno rezervisana tačka za buduće povezivanje portala
-        sa desktop ili serverskom aplikacijom.
+        Rezervisana tačka za buduće povezivanje portala sa
+        desktop ili serverskom aplikacijom.
       </p>
 
       <div class="terminal-box">INTEGRATION_STATUS = NOT_CONNECTED
@@ -829,12 +1145,128 @@ API_CONTRACT = TODO
 FALLBACK = STATIC_LOCAL_UI</div>
 
       <div class="notice">
-        Future integration point: ovde kasnije definisati
-        dozvoljene komande, format odgovora, autentikaciju,
-        timeout i prikaz grešaka.
+        Ovde kasnije definisati dozvoljene komande, format
+        odgovora, autentikaciju, timeout i prikaz grešaka.
       </div>
     </section>
   </aside>
+
+  <dialog id="accessGate">
+    <form
+      id="accessForm"
+      class="gate"
+      method="dialog"
+    >
+      <p class="eyebrow">
+        KUCANJE // PRIVATNI ULAZ
+      </p>
+
+      <h2>Kancelarija Belog Zeca</h2>
+
+      <p id="gateHelp">
+        Unesi lozinku za ulaz.
+      </p>
+
+      <label for="officePassword">
+        LOZINKA
+      </label>
+
+      <input
+        id="officePassword"
+        type="password"
+        autocomplete="current-password"
+        required
+        minlength="4"
+      >
+
+      <div id="confirmWrap" hidden>
+        <label for="officePasswordConfirm">
+          POTVRDI LOZINKU
+        </label>
+
+        <input
+          id="officePasswordConfirm"
+          type="password"
+          autocomplete="new-password"
+          minlength="4"
+        >
+      </div>
+
+      <p
+        id="gateError"
+        class="gate-error"
+        role="alert"
+      ></p>
+
+      <div class="gate-actions">
+        <button
+          id="cancelGate"
+          type="button"
+        >
+          ODUSTANI
+        </button>
+
+        <button
+          class="primary"
+          type="submit"
+        >
+          OTKLJUČAJ
+        </button>
+      </div>
+    </form>
+  </dialog>
+
+  <section
+    id="office"
+    class="office"
+    aria-hidden="true"
+  >
+    <div class="office-shell">
+      <header class="office-head">
+        <div class="office-title">
+          <small>
+            IZOLOVANA ZONA // LOCAL UI
+          </small>
+
+          <h1>
+            Kancelarija Belog Zeca
+          </h1>
+        </div>
+
+        <button
+          id="lockOffice"
+          class="lock-exit"
+          type="button"
+        >
+          ZAKLJUČAJ I IZAĐI
+        </button>
+      </header>
+
+      <div class="office-intro">
+        <span>
+          PRIVATNA ARHIVA // 13 PROZORA
+        </span>
+
+        <span>
+          APP BRIDGES = ČEKAJU MONTAŽU
+        </span>
+      </div>
+
+      <div
+        id="archiveGrid"
+        class="archive-grid"
+        aria-label="Trinaest arhivskih prozora"
+      ></div>
+
+      <div
+        id="officeStatus"
+        class="office-status"
+        aria-live="polite"
+      >
+        Izaberi arhivski prozor. Svi prozori su trenutno prazni.
+      </div>
+    </div>
+  </section>
 
   <script>
     "use strict";
@@ -846,6 +1278,24 @@ FALLBACK = STATIC_LOCAL_UI</div>
       "oi-most",
       "app-bridge"
     ]);
+
+    const officeRoute = "beli-zec-office";
+
+    const archiveNames = [
+      "_1Screenshots_",
+      "_2Screenshots_",
+      "_md_",
+      "_pdf_",
+      "_txt_",
+      "_zakljucano_",
+      "WHR simbolički folder",
+      "app_prevodilac_v05_FINAL",
+      "KEY_PRECICE_UPUSTVO",
+      "10_QWEN_kancelarija",
+      "12_GEMINI_kancelarija",
+      "13_CHATGPT_kancelarija",
+      "101_BELIZEC_kancelarija"
+    ];
 
     const statusConfig = {
       operational: {
@@ -888,18 +1338,391 @@ FALLBACK = STATIC_LOCAL_UI</div>
     const bridgeLog =
       document.getElementById("bridgeLog");
 
-    const closeDrawerButton =
-      document.getElementById("closeDrawer");
+    const officeDoor =
+      document.getElementById("officeDoor");
 
-    const routeLabel =
-      document.getElementById("routeLabel");
+    const accessGate =
+      document.getElementById("accessGate");
+
+    const accessForm =
+      document.getElementById("accessForm");
+
+    const passwordInput =
+      document.getElementById("officePassword");
+
+    const passwordConfirm =
+      document.getElementById("officePasswordConfirm");
+
+    const confirmWrap =
+      document.getElementById("confirmWrap");
+
+    const gateHelp =
+      document.getElementById("gateHelp");
+
+    const gateError =
+      document.getElementById("gateError");
+
+    const office =
+      document.getElementById("office");
+
+    const officeStatus =
+      document.getElementById("officeStatus");
 
     let lastFocus = null;
+    let officeUnlocked = false;
+
+    try {
+      officeUnlocked =
+        sessionStorage.getItem(
+          "whr-office-unlocked"
+        ) === "yes";
+    } catch (error) {
+      officeUnlocked = false;
+    }
+
+    function bytesToBase64(bytes) {
+      return btoa(
+        String.fromCharCode(...bytes)
+      );
+    }
+
+    function base64ToBytes(value) {
+      return Uint8Array.from(
+        atob(value),
+        character => character.charCodeAt(0)
+      );
+    }
+
+    async function derivePassword(
+      password,
+      salt
+    ) {
+      const encodedPassword =
+        new TextEncoder().encode(password);
+
+      const material =
+        await crypto.subtle.importKey(
+          "raw",
+          encodedPassword,
+          "PBKDF2",
+          false,
+          ["deriveBits"]
+        );
+
+      const bits =
+        await crypto.subtle.deriveBits(
+          {
+            name: "PBKDF2",
+            salt,
+            iterations: 120000,
+            hash: "SHA-256"
+          },
+          material,
+          256
+        );
+
+      return bytesToBase64(
+        new Uint8Array(bits)
+      );
+    }
+
+    function showGate() {
+      let firstSetup = true;
+
+      try {
+        firstSetup =
+          !localStorage.getItem(
+            "whr-office-verifier"
+          );
+      } catch (error) {
+        gateError.textContent =
+          "Lokalno čuvanje lozinke nije dostupno.";
+      }
+
+      confirmWrap.hidden = !firstSetup;
+      passwordConfirm.required = firstSetup;
+
+      gateHelp.textContent =
+        firstSetup
+          ? "Prvi ulaz: postavi lokalnu lozinku za ovaj pregledač."
+          : "Kucanje je primljeno. Unesi lokalnu lozinku za ulaz.";
+
+      gateError.textContent = "";
+      accessForm.reset();
+
+      if (!accessGate.open) {
+        accessGate.showModal();
+      }
+
+      setTimeout(
+        () => passwordInput.focus(),
+        0
+      );
+    }
+
+    function knock() {
+      officeDoor.classList.remove(
+        "knocking"
+      );
+
+      void officeDoor.offsetWidth;
+
+      officeDoor.classList.add(
+        "knocking"
+      );
+
+      setTimeout(
+        showGate,
+        420
+      );
+    }
+
+    function openOffice(
+      updateHash = true
+    ) {
+      if (!officeUnlocked) {
+        showGate();
+        return;
+      }
+
+      closeRoute(false);
+
+      document.body.classList.add(
+        "office-open"
+      );
+
+      office.setAttribute(
+        "aria-hidden",
+        "false"
+      );
+
+      if (
+        updateHash &&
+        location.hash !== `#${officeRoute}`
+      ) {
+        history.pushState(
+          null,
+          "",
+          `#${officeRoute}`
+        );
+      }
+    }
+
+    function lockAndExit(
+      updateHash = true
+    ) {
+      officeUnlocked = false;
+
+      try {
+        sessionStorage.removeItem(
+          "whr-office-unlocked"
+        );
+      } catch (error) {
+        /* Nastavi zaključavanje. */
+      }
+
+      document.body.classList.remove(
+        "office-open"
+      );
+
+      office.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
+      if (
+        updateHash &&
+        location.hash === `#${officeRoute}`
+      ) {
+        history.pushState(
+          null,
+          "",
+          location.pathname + location.search
+        );
+      }
+
+      officeDoor.focus();
+    }
+
+    function buildArchive() {
+      const grid =
+        document.getElementById("archiveGrid");
+
+      archiveNames.forEach(
+        (name, index) => {
+          const button =
+            document.createElement("button");
+
+          const number =
+            document.createElement("span");
+
+          const title =
+            document.createElement("strong");
+
+          const status =
+            document.createElement("small");
+
+          button.type = "button";
+          button.className = "archive-window";
+
+          number.className = "archive-number";
+          number.textContent =
+            String(index + 1).padStart(2, "0");
+
+          title.textContent = name;
+
+          status.innerHTML =
+            "STATUS = PRAZAN<br>" +
+            "APP_BRIDGE = NOT_CONNECTED";
+
+          button.append(
+            number,
+            title,
+            status
+          );
+
+          button.addEventListener(
+            "click",
+            () => {
+              document
+                .querySelectorAll(".archive-window")
+                .forEach(item => {
+                  item.classList.remove("selected");
+                });
+
+              button.classList.add("selected");
+
+              officeStatus.textContent =
+                `${String(index + 1).padStart(2, "0")} // ` +
+                `${name} — prozor je prazan i čeka ` +
+                "buduću APP montažu.";
+            }
+          );
+
+          grid.appendChild(button);
+        }
+      );
+    }
+
+    accessForm.addEventListener(
+      "submit",
+      async event => {
+        event.preventDefault();
+
+        const password =
+          passwordInput.value;
+
+        try {
+          const savedVerifier =
+            localStorage.getItem(
+              "whr-office-verifier"
+            );
+
+          if (!savedVerifier) {
+            if (password.length < 4) {
+              gateError.textContent =
+                "Lozinka mora imati najmanje 4 znaka.";
+              return;
+            }
+
+            if (
+              password !==
+              passwordConfirm.value
+            ) {
+              gateError.textContent =
+                "Lozinke se ne podudaraju.";
+              return;
+            }
+
+            const salt =
+              crypto.getRandomValues(
+                new Uint8Array(16)
+              );
+
+            const verifier =
+              await derivePassword(
+                password,
+                salt
+              );
+
+            localStorage.setItem(
+              "whr-office-salt",
+              bytesToBase64(salt)
+            );
+
+            localStorage.setItem(
+              "whr-office-verifier",
+              verifier
+            );
+          } else {
+            const savedSalt =
+              localStorage.getItem(
+                "whr-office-salt"
+              );
+
+            if (!savedSalt) {
+              gateError.textContent =
+                "Lokalni zapis lozinke nije potpun.";
+              return;
+            }
+
+            const salt =
+              base64ToBytes(savedSalt);
+
+            const candidate =
+              await derivePassword(
+                password,
+                salt
+              );
+
+            if (candidate !== savedVerifier) {
+              gateError.textContent =
+                "Pristup odbijen: pogrešna lozinka.";
+              return;
+            }
+          }
+
+          officeUnlocked = true;
+
+          sessionStorage.setItem(
+            "whr-office-unlocked",
+            "yes"
+          );
+
+          accessGate.close();
+          openOffice(true);
+        } catch (error) {
+          gateError.textContent =
+            "Lokalna provera nije dostupna u ovom pregledaču.";
+        }
+      }
+    );
+
+    officeDoor.addEventListener(
+      "click",
+      knock
+    );
+
+    document
+      .getElementById("cancelGate")
+      .addEventListener(
+        "click",
+        () => accessGate.close()
+      );
+
+    document
+      .getElementById("lockOffice")
+      .addEventListener(
+        "click",
+        () => lockAndExit()
+      );
 
     function savedStatus() {
       try {
         const value =
-          localStorage.getItem("whr-magistrala-status");
+          localStorage.getItem(
+            "whr-magistrala-status"
+          );
 
         return statusConfig[value]
           ? value
@@ -915,7 +1738,8 @@ FALLBACK = STATIC_LOCAL_UI</div>
           ? key
           : "operational";
 
-      const state = statusConfig[selected];
+      const state =
+        statusConfig[selected];
 
       statusButton.style.setProperty(
         "--status-color",
@@ -931,17 +1755,16 @@ FALLBACK = STATIC_LOCAL_UI</div>
       bridgeLog.textContent =
         `[LOCAL] ${state.note}\n` +
         `[STATE] ${selected.toUpperCase()}\n` +
-        `[BACKEND] NOT_CONNECTED`;
+        "[BACKEND] NOT_CONNECTED";
 
       document
         .querySelectorAll(".status-choice")
-        .forEach((button) => {
-          const isSelected =
-            button.dataset.status === selected;
-
+        .forEach(button => {
           button.setAttribute(
             "aria-pressed",
-            String(isSelected)
+            String(
+              button.dataset.status === selected
+            )
           );
         });
 
@@ -951,7 +1774,7 @@ FALLBACK = STATIC_LOCAL_UI</div>
           selected
         );
       } catch (error) {
-        /* Portal nastavlja da radi bez localStorage-a. */
+        /* Portal radi i bez čuvanja statusa. */
       }
     }
 
@@ -975,11 +1798,6 @@ FALLBACK = STATIC_LOCAL_UI</div>
           button.style.setProperty(
             "--choice",
             state.color
-          );
-
-          button.setAttribute(
-            "aria-pressed",
-            "false"
           );
 
           title.textContent = state.label;
@@ -1007,28 +1825,21 @@ FALLBACK = STATIC_LOCAL_UI</div>
         return;
       }
 
-      if (
-        !document.body.classList.contains(
-          "drawer-open"
-        )
-      ) {
-        lastFocus = document.activeElement;
-      }
+      lastFocus = document.activeElement;
 
       document
         .querySelectorAll(".panel")
-        .forEach((panel) => {
-          const isActive =
-            panel.dataset.panel === route;
-
+        .forEach(panel => {
           panel.classList.toggle(
             "active",
-            isActive
+            panel.dataset.panel === route
           );
         });
 
-      routeLabel.textContent =
-        `ROUTE // #${route}`;
+      document
+        .getElementById("routeLabel")
+        .textContent =
+          `ROUTE // #${route}`;
 
       document.body.classList.add(
         "drawer-open"
@@ -1055,7 +1866,9 @@ FALLBACK = STATIC_LOCAL_UI</div>
         );
       }
 
-      closeDrawerButton.focus();
+      document
+        .getElementById("closeDrawer")
+        .focus();
     }
 
     function closeRoute(
@@ -1098,6 +1911,24 @@ FALLBACK = STATIC_LOCAL_UI</div>
       const route =
         location.hash.slice(1);
 
+      if (route === officeRoute) {
+        if (officeUnlocked) {
+          openOffice(false);
+        } else {
+          document.body.classList.remove(
+            "office-open"
+          );
+
+          showGate();
+        }
+
+        return;
+      }
+
+      document.body.classList.remove(
+        "office-open"
+      );
+
       if (routes.has(route)) {
         openRoute(route, false);
       } else {
@@ -1107,10 +1938,12 @@ FALLBACK = STATIC_LOCAL_UI</div>
 
     document
       .querySelectorAll(".route-button")
-      .forEach((button) => {
+      .forEach(button => {
         button.addEventListener(
           "click",
-          () => openRoute(button.dataset.route)
+          () => openRoute(
+            button.dataset.route
+          )
         );
       });
 
@@ -1119,10 +1952,12 @@ FALLBACK = STATIC_LOCAL_UI</div>
       () => openRoute("control-bridge")
     );
 
-    closeDrawerButton.addEventListener(
-      "click",
-      () => closeRoute()
-    );
+    document
+      .getElementById("closeDrawer")
+      .addEventListener(
+        "click",
+        () => closeRoute()
+      );
 
     backdrop.addEventListener(
       "click",
@@ -1133,21 +1968,20 @@ FALLBACK = STATIC_LOCAL_UI</div>
       "hashchange",
       syncHash
     );
-  window.addEventListener(
-    "popstate",
-    syncHash
-   );
+
+    window.addEventListener(
+      "popstate",
+      syncHash
+    );
+
     document.addEventListener(
       "keydown",
-      (event) => {
-        const drawerIsOpen =
-          document.body.classList.contains(
-            "drawer-open"
-          );
-
+      event => {
         if (
           event.key === "Escape" &&
-          drawerIsOpen
+          document.body.classList.contains(
+            "drawer-open"
+          )
         ) {
           closeRoute();
         }
@@ -1155,6 +1989,7 @@ FALLBACK = STATIC_LOCAL_UI</div>
     );
 
     buildStatusOptions();
+    buildArchive();
     setStatus(savedStatus());
     syncHash();
   </script>
