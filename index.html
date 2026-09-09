@@ -7,8 +7,8 @@
   <title>WHR STUDIOS — Centralni Portal v2</title>
 
   <style>
-    :root {
-      --bg-deep: #020308;
+    :root {S
+      --bg-deep: #020308;S
       --bg-main: #060811;
       --bg-panel: rgba(10, 14, 25, 0.94);
       --border: rgba(255, 255, 255, 0.12);
@@ -413,7 +413,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin: 18px 0;
+      margin: 18px 0A;
     }
 
     .tag {
@@ -1133,7 +1133,10 @@ FALLBACK = STATIC_LOCAL_UI</div>
       "hashchange",
       syncHash
     );
-
+  window.addEventListener(
+    "popstate",
+    syncHash
+   );
     document.addEventListener(
       "keydown",
       (event) => {
