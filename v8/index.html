@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="sr-Latn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="WHR Astro Mozak V8 — lokalni katalog alata, plugin ulazi i dokazni tragovi.">
+  <title>WHR · Astro Mozak V8</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Preskoči na sadržaj</a>
+  <aside class="sidebar">
+    <a class="brand" href="#plugins"><span class="brand-icon" aria-hidden="true">🐇</span><span>WHR<span class="brand-sub">ASTRO MOZAK</span></span><span class="version">V8</span></a>
+    <div class="workspace-label">RADIONICA BELOG ZECA</div>
+    <nav aria-label="Glavna navigacija">
+      <a href="#plugins" data-view="plugins"><span aria-hidden="true">▦</span> Pluginovi</a>
+      <a href="#journal" data-view="journal"><span aria-hidden="true">◷</span> Dnevnik prenosa</a>
+      <a href="#guide" data-view="guide"><span aria-hidden="true">⇄</span> Kako radi most</a>
+    </nav>
+    <div class="sidebar-bottom"><span class="dot"></span> LOKALNI PODACI<span>Codex / Betmen × Beli Zec</span></div>
+  </aside>
+  <main id="main" tabindex="-1">
+    <header class="topbar"><span>WHR / KONTROLNA RADIONICA</span><span class="bridge-badge">Lokalni most · nije povezan</span></header>
+    <div id="storage-warning" class="notice warning" hidden>Trajno čuvanje nije dostupno. Promene ostaju u ovoj sesiji — izvezi ih pre zatvaranja.</div>
+    <section id="view-plugins" class="view">
+      <div class="heading"><div><div class="eyebrow">OD POKRETAČA DO PLUGINA</div><h1>Tvoja radionica.<br><span>Jedan ulaz za alate.</span></h1><p class="intro">Pronađi alat, definiši ulaz i sačuvaj trag rezultata. Svaki plugin počinje proverljivim opisom.</p></div><button id="add-plugin" class="primary">＋ Novi plugin</button></div>
+      <div class="stats"><div><span id="count-all">0</span><small>PLUGINOVA U KATALOGU</small></div><div><span id="count-verified">0</span><small>RUČNO POTVRĐENIH</small></div><div><span id="count-requests">0</span><small>PRIPREMLJENIH ULAZA</small></div><div><span class="muted">FAZA 01</span><small>KATALOG I PRENOS</small></div></div>
+      <div class="section-heading"><h2>Plugin katalog</h2><div class="actions"><button id="import-button">↑ Uvezi katalog</button><button id="export-button">↓ Izvezi katalog</button></div></div>
+      <div class="filters"><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Naziv, projekat ili putanja…" aria-label="Pretraži pluginove"></label><label><span class="sr-only">Dokazni status</span><select id="status-filter"><option value="">Svi statusi</option><option value="OPEN">OPEN</option><option value="NOT_TESTED">NIJE TESTIRANO</option><option value="VERIFIED">RUČNO POTVRĐENO</option></select></label></div>
+      <div id="plugin-grid" class="plugin-grid"></div>
+      <div id="empty" class="empty"><div class="empty-icon" aria-hidden="true">＋</div><h3>Prvi alat čeka svoju karticu.</h3><p>Dodaj postojeći pokretač i opiši šta prima i vraća.<br>Katalog je prazan dok ne uneseš svoje stvarne podatke.</p><button id="empty-add">Dodaj prvi plugin →</button></div>
+      <p id="no-results" class="empty" hidden>Nema pluginova za izabranu pretragu.</p>
+    </section>
+    <section id="view-journal" class="view" hidden><div class="eyebrow">POREKLO I KONTINUITET</div><h1>Dnevnik prenosa</h1><p class="intro">Pripremljeni zahtevi i ručno pridruženi rezultati. Zahtev za rad ostaje NOT_RUN dok izvršavanje nije dokazano.</p><button id="export-journal">↓ Izvezi dnevnik</button><div id="journal-list" class="journal-list"></div></section>
+    <section id="view-guide" class="view" hidden><div class="eyebrow">ULAZ → ALAT → IZLAZ</div><h1>Most između radionica.</h1><p class="intro">Pokretač postaje deo plugina kada uz njega imamo poznat ulaz, izlaz i način provere.</p><div class="flow"><div><b>01 / KATALOG</b><p>Naziv, putanja, projekat i dokazni status.</p></div><span>→</span><div><b>02 / ULAZ</b><p>JSON zahtev sa ID-jem plugina i zadatkom.</p></div><span>→</span><div><b>03 / LOKALNI MOST</b><p>Sledeća faza: povezivanje i provera izvršavanja na računaru.</p></div><span>→</span><div><b>04 / REZULTAT</b><p>Ručni uvoz odgovora uz ID pripremljenog zahteva.</p></div></div><article class="guide-card"><h2>Šta ova verzija radi</h2><p>Čuva katalog u ovom pregledaču, uvozi i izvozi opise pluginova, priprema JSON ulaze i povezuje ih sa ručno unetim rezultatima. Ne izvršava CMD, PowerShell, Python ili EXE fajlove.</p><h2>Veza sa V7</h2><p>Izvezeni dnevnik može biti tekstualni izvor u V7 radionici. Ovaj V8 katalog još ne učitava niti menja V7 arhivu i njene lokalne podatke.</p><h2>Gde su podaci</h2><p>U localStorage ovog pregledača. Promena adrese ili pregledača može otvoriti drugi prostor za čuvanje. Redovno izvozi katalog i dnevnik. Nema automatskog slanja podataka na GitHub ili mrežu.</p><h2>Provera dokaza</h2><p>„Ručno potvrđeno” je oznaka koju unosi autor kartice; nije automatski test programa. Uvezeni rezultati su prijavljeni nalazi. Verzija manifesta: WHR_V8_PLUGIN_CATALOG_1.</p></article></section>
+    <footer>DVA NAKOVNJA — JEDAN BELI ZEC! <span>V8 · 0.1 / katalog i prenos</span></footer>
+  </main>
+  <dialog id="plugin-dialog"><form id="plugin-form"><div class="dialog-header"><div><div class="eyebrow">PLUGIN MANIFEST</div><h2 id="plugin-title">Novi plugin</h2></div><button type="button" data-close aria-label="Zatvori">×</button></div><input name="id" type="hidden"><label>Naziv<input name="name" maxlength="100" required placeholder="Na primer: WHR Tragač alata"></label><label>Putanja pokretača<input name="launcher" maxlength="1000" required placeholder="Izaberi i prepiši stvarnu punu putanju"></label><div class="form-row"><label>Projekat<input name="project" maxlength="120" required></label><label>Verzija<input name="version" maxlength="60" placeholder="Nepoznata dok nije proverena"></label></div><label>Šta alat radi<textarea name="description" maxlength="2000" required rows="2"></textarea></label><div class="form-row"><label>Šta prima<textarea name="input" maxlength="1000" required rows="2"></textarea></label><label>Šta vraća<textarea name="output" maxlength="1000" required rows="2"></textarea></label></div><label>Dokazni status<select name="status"><option value="OPEN">OPEN — veza za proveru</option><option value="NOT_TESTED">NIJE TESTIRANO</option><option value="VERIFIED">RUČNO POTVRĐENO — navedi dokaz</option></select></label><label>Dokaz / šta nedostaje<textarea name="evidence" maxlength="4000" rows="2" placeholder="Izvorna putanja, pročitani sadržaj, test ili nedostajući podatak"></textarea></label><p id="plugin-error" class="form-error" role="alert"></p><div class="dialog-footer"><button type="button" data-close>Otkaži</button><button class="primary" type="submit">Sačuvaj karticu</button></div></form></dialog>
+  <dialog id="request-dialog"><form id="request-form"><div class="dialog-header"><h2>Pripremi ulaz</h2><button type="button" data-close aria-label="Zatvori">×</button></div><p id="request-plugin"></p><label>Zadatak / ulaz za alat<textarea name="payload" maxlength="20000" rows="7" required></textarea></label><p class="hint">Preuzima se JSON zahtev i beleži NOT_RUN. Program se ne pokreće.</p><p id="request-error" class="form-error" role="alert"></p><div class="dialog-footer"><button type="button" data-close>Otkaži</button><button class="primary" type="submit">↓ Sačuvaj ulaz JSON</button></div></form></dialog>
+  <dialog id="result-dialog"><form id="result-form"><div class="dialog-header"><h2>Pridruži rezultat</h2><button type="button" data-close aria-label="Zatvori">×</button></div><p id="result-request" class="hint"></p><label>Prijavljeni status<select name="status"><option>OPEN</option><option>PASS</option><option>FAIL</option><option>NOT_RUN</option></select></label><label>Rezultat / izlaz alata<textarea name="text" required maxlength="30000" rows="6"></textarea></label><label>Dokaz / izvor rezultata<textarea name="evidence" required maxlength="4000" rows="3"></textarea></label><p class="hint">Ručni unos se čuva sa oznakom REPORTED. Aplikacija ne potvrđuje izvršavanje.</p><p id="result-error" class="form-error" role="alert"></p><div class="dialog-footer"><button type="button" data-close>Otkaži</button><button class="primary" type="submit">Pridruži rezultat</button></div></form></dialog>
+  <input id="file-input" type="file" accept="application/json,.json" hidden>
+  <div id="toast" role="status" aria-live="polite" hidden></div>
+  <noscript>Za lokalni katalog uključi JavaScript. Podaci se ne šalju na mrežu.</noscript>
+</body>
+</html>
